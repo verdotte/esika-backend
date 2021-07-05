@@ -6,13 +6,7 @@ on:
       - develop
   pull_request:
     branches: [develop]
-    types: [opened, synchronize]
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - reopened
-      - synchronize
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   main:
