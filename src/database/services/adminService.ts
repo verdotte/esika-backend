@@ -21,7 +21,7 @@ export class AdminService {
 
   /**
    * Create
-   * @author Verdotte Aututu
+   * @author Verdotte Aututu, Desire Kaleba
    * @since 0.001
    *
    * @param {CreateAdminDto} adminData
@@ -29,6 +29,6 @@ export class AdminService {
    * @memberof AdminService
    */
   create = async (adminData: CreateAdminDto): Promise<Admin> => {
-    return Admin.create(adminData).save();
+    return await Admin.create(adminData).save();
   };
 }
