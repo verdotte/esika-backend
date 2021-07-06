@@ -37,16 +37,11 @@ export class AuthController {
    * @memberof AuthController
    */
   login = async (req: Request, res: Response): Promise<Response> => {
-
-    // Get admin information
     const adminInfo: LoginAdminDto = req.body;
 
-    // Fetch the specific admin
     const foundAdmin = await this.adminService.findUsername(adminInfo.username); 
     
-    // Check if the admin exists
-    // and return not found not
-    if (foundAdmin === null) {
+    if (!foundAdmin) {
       return this.responseUtil.error({
         statusCode: NOT_FOUND,
         message: notExist(adminInfo.username),
@@ -54,8 +49,6 @@ export class AuthController {
       });
     }
 
-    // Check if the provided password matches the stored password
-    // and return unauthorized if not
     const isPasswordCorrect = this.passwordUtil.compare(adminInfo.password, foundAdmin.password);
     if (!isPasswordCorrect) {
       return this.responseUtil.error({
@@ -65,8 +58,6 @@ export class AuthController {
         });
     }
     
-    // Generate the admin token
-    // and return it along with his information
     const token = this.tokenUtil.generate(foundAdmin.adminId);
     return this.responseUtil.success({
       statusCode: OK,
