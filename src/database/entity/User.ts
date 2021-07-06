@@ -5,7 +5,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
+  JoinColumn
 } from 'typeorm';
+
+import { Payment } from "./Payment";
+import { Properties } from "./Properties";
 
 export enum UserType {
   HOST = 'host',
@@ -39,12 +44,19 @@ export class User extends BaseEntity {
     name: 'user_type',
     type: 'enum',
     enum: UserType,
-    default: UserType.NORMAL,
   })
   userType: UserType;
 
   @Column({ default: true })
   active: boolean;
+
+  @OneToMany(() => Payment, payment => payment.user)
+  @JoinColumn()
+  payment: Payment[];
+
+  @OneToMany(() => Properties, property => property.user)
+  @JoinColumn()
+  property: Properties[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
