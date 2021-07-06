@@ -41,7 +41,7 @@ export class AuthController {
 
     const foundAdmin = await this.adminService.findUsername(adminInfo.username); 
     
-    if (!foundAdmin) {
+    if (foundAdmin === null) {
       return this.responseUtil.error({
         statusCode: NOT_FOUND,
         message: notExist(adminInfo.username),
