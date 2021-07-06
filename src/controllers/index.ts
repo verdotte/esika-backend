@@ -3,7 +3,11 @@ import { AdminController } from './adminController';
 import { responseUtil, tokenUtil, passwordUtil } from '../utils';
 import { adminService } from '../database/services';
 
-export const authController = new AuthController(tokenUtil, responseUtil);
+export const authController = new AuthController(
+  tokenUtil, 
+  responseUtil, 
+  passwordUtil, 
+  adminService);
 
 export const adminController = new AdminController(
   tokenUtil,
