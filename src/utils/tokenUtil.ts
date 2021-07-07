@@ -22,6 +22,7 @@ export class TokenUtil {
 
   /**
    * Decode
+   * @deprecated
    * @author Verdotte Aututu
    * @since 0.001
    *
@@ -29,13 +30,11 @@ export class TokenUtil {
    * @returns {unknown} the decoded token
    * @memberof TokenUtil
    */
-  decode = (token: string): unknown => {
+  decode = (token: string): any => {
     try {
-      return jwt.verify(token, JWT_SECRET_KEY as string);
+      return jwt.verify(token, `${JWT_SECRET_KEY}`);
     } catch (error) {
-      return {
-        errors: error,
-      };
+      return error;
     }
   };
 }
