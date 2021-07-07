@@ -4,6 +4,7 @@ const general = (resource: string, action: string) =>
 export const deleted = (resource: string) => general(resource, 'deleted');
 export const created = (resource: string) => general(resource, 'created');
 export const updated = (resource: string) => general(resource, 'updated');
+export const verified = (resource: string) => general(resource, 'verified');
 
 export const exist = (resource: string) => `${resource} already exists`;
 export const notExist = (resource: string) => `${resource} does not exist`;

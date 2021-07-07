@@ -17,8 +17,12 @@ export class AdminRoute implements IRoute {
       .route(`${this.path}/signup`)
       .post(
         adminValidator.signup,
-        checkUsername,
+        asyncHandler(checkUsername),
         asyncHandler(this.adminController.createAdmin),
       );
+
+    this.router
+      .route(`${this.path}/login`)
+      .post(adminValidator.login, asyncHandler(this.adminController.login));
   }
 }
