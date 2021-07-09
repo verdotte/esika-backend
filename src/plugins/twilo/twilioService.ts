@@ -1,4 +1,4 @@
-import dotenv from 'dotenv/';
+import dotenv from 'dotenv';
 import { twilioClient } from './twilio';
 import { ITwilioResponse } from '../../interfaces/twilio.interface';
 dotenv.config();
