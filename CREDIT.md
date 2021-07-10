@@ -10,7 +10,9 @@ All notable changes to this project will be documented in this file.
 
 - Entities and migrations [Project Setup] ~ add news entities and migrations ~ Dan Mugisho ~ July 07, 2021
 
-- Implement User Authentication & Authorization [Implementation] ~ Verdotte Aututu ~ July 07, 2020
+- Implement User Authentication & Authorization [Implementation] ~ Verdotte Aututu ~ July 07, 2021
+
+- Implement get all host endpoint  [Implementation] ~ Dan Mugisho ~ July 07, 2021
 
 #### Launch v0.001 ~ ESIKA API
 

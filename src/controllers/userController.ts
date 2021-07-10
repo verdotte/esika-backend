@@ -43,4 +43,27 @@ export class UserController {
       res,
     });
   };
+
+  /**
+   * Get Users by userType
+   * @author Dan Mugisho
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} users payload
+   * @memberof AuthController
+   */
+  getAllHost = async (
+    req: IRequestWithUser,
+    res: Response,
+  ): Promise<Response> => {
+    const userList = await this.userService.findByUserType("host");
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `success`,
+      data: { host: userList },
+      res,
+    });
+  };
 }
