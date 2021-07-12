@@ -18,5 +18,10 @@ export class UserRoute implements IRoute {
         asyncHandler(checkAuthUser),
         asyncHandler(this.UserController.getProfile),
       );
+    this.router
+      .route(`${this.path}/host`)
+      .get(
+        asyncHandler(this.UserController.getAllHost),
+      );
   }
 }

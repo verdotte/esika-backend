@@ -65,4 +65,19 @@ export class UserService {
   create = async (userData: CreateUserDto): Promise<User> => {
     return User.create(userData).save();
   };
+
+  /**
+   * Find By userType
+   * @author Dan Mugisho
+   * @since 0.001
+   *
+   * @param {string} userType
+   * @returns {User[]} users payload
+   * @memberof UserService
+   */
+
+  findByUserType = async (userType: string): Promise<User[]> => {
+    const users = await User.find({ where: { userType: userType }});
+    return users;
+  };
 }
