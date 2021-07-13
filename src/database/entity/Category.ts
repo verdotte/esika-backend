@@ -5,11 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  JoinColumn,
 } from 'typeorm';
-import { Property } from './Property';
-
 @Entity()
 export class Category extends BaseEntity {
   @PrimaryGeneratedColumn({ name: 'category_id' })
@@ -29,8 +25,4 @@ export class Category extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
-  @OneToMany(() => Property, (property) => property.category)
-  @JoinColumn()
-  property: Property[];
 }

@@ -1,4 +1,3 @@
-import { ConnectionOptions } from 'typeorm';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -16,13 +15,10 @@ const {
 
 const dir = NODE_ENV === 'production' ? 'build' : 'src';
 
-const database = NODE_ENV === 'production'
-  ? PROD_DB
-  : NODE_ENV === 'test'
-  ? TEST_DB
-  : DEV_DB;
-  
-const config: ConnectionOptions = {
+const database =
+  NODE_ENV === 'production' ? PROD_DB : NODE_ENV === 'test' ? TEST_DB : DEV_DB;
+
+const config: any = {
   type: 'mysql',
   host: DB_HOST,
   port: Number(DB_PORT),
@@ -34,6 +30,8 @@ const config: ConnectionOptions = {
   entities: [`${dir}/database/entity/**/*.{ts,js}`],
   migrations: [`${dir}/database/migrations/**/*.{ts,js}`],
   subscribers: [`${dir}/database/subscriber/**/*.{ts,js}`],
+  seeds: [`${dir}/database/seeds/**/*.{ts,js}`],
+  factories: [`${dir}/database/factories/**/*.{ts,js}`],
   cli: {
     migrationsDir: `${dir}/database/migrations`,
     entitiesDir: `${dir}/database/entity`,

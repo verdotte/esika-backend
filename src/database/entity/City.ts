@@ -5,11 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  JoinColumn,
 } from 'typeorm';
-
-import { Property } from './Property';
 
 @Entity()
 export class City extends BaseEntity {
@@ -19,6 +15,9 @@ export class City extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  description: string;
+
   @Column({ default: true })
   active: boolean;
 
@@ -27,8 +26,4 @@ export class City extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
-  @OneToMany(() => Property, (property) => property.city)
-  @JoinColumn()
-  property: Property[];
 }
