@@ -18,9 +18,9 @@ const dir = NODE_ENV === 'production' ? 'build' : 'src';
 
 const database = NODE_ENV === 'production'
   ? PROD_DB
-  : NODE_ENV === 'development'
-  ? DEV_DB
-  : TEST_DB;
+  : NODE_ENV === 'test'
+  ? TEST_DB
+  : DEV_DB;
   
 const config: ConnectionOptions = {
   type: 'mysql',
