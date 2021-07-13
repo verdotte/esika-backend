@@ -5,28 +5,24 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  ManyToOne,
-  JoinColumn,
+  BeforeInsert,
 } from 'typeorm';
 
-import { User } from './User';
-import { Images } from './Images';
-import { City } from './City';
-import { Category } from './Category';
+import { tokenUtil } from '../../utils';
 
-export enum type {
+export enum PropertyType {
   SELL = 'sell',
   RENT = 'rent',
 }
 
-export enum unit {
+export enum Unit {
   DAY = 'day',
   MONTH = 'month',
+  YEAR = 'year',
 }
 
-@Entity()
-export class Properties extends BaseEntity {
+@Entity({ name: 'property' })
+export class Property extends BaseEntity {
   @PrimaryGeneratedColumn({ name: 'property_id' })
   propertyId: number;
 
@@ -42,23 +38,23 @@ export class Properties extends BaseEntity {
   @Column()
   location: string;
 
-  @Column({ name: 'cover_image' })
-  coverImage: string;
+  @Column({ nullable: true })
+  lat: number;
+
+  @Column({ nullable: true })
+  lng: number;
 
   @Column({ default: true })
   active: boolean;
 
-  @ManyToOne(() => Category, category => category.property)
-  @JoinColumn()
-  category: Category;
+  @Column()
+  category: number;
 
-  @ManyToOne(() => User, user => user.property)
-  @JoinColumn()
-  user: User;
+  @Column()
+  user: number;
 
-  @ManyToOne(() => City, city => city.property)
-  @JoinColumn()
-  city: City;
+  @Column()
+  city: number;
 
   @Column({ default: false })
   verified: boolean;
@@ -68,22 +64,22 @@ export class Properties extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: type,
+    enum: PropertyType,
   })
-  type: type;
+  type: PropertyType;
 
   @Column({
     type: 'enum',
-    enum: unit,
-    nullable: true
+    enum: Unit,
+    nullable: true,
   })
-  unit: type;
+  unit: Unit;
 
   @Column({ nullable: true })
-  bedroom: string;
+  bedroom: number;
 
   @Column({ nullable: true })
-  bathroom: string;
+  bathroom: boolean;
 
   @Column({ name: 'square_feet', nullable: true })
   squareFeet: string;
@@ -91,15 +87,19 @@ export class Properties extends BaseEntity {
   @Column({ nullable: true })
   parking: boolean;
 
+  @Column({ nullable: true })
+  balcony: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => Images, image => image.property)
-  @JoinColumn()
-  image: Images[];
-
+  @BeforeInsert()
+  setSlug(): void {
+    this.slug = `${this.title.replace(/ +/g, '')}${tokenUtil.slugGenerator(
+      12,
+    )}`;
+  }
 }
-

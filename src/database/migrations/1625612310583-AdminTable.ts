@@ -1,9 +1,8 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class AdminTable1625612310583 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
         CREATE TABLE IF NOT EXISTS admin (
             admin_id BIGINT(11) NOT NULL AUTO_INCREMENT,
             username VARCHAR(250) NOT NULL,
@@ -18,10 +17,10 @@ export class AdminTable1625612310583 implements MigrationInterface {
             PRIMARY KEY (admin_id)
           ) 
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE admin`);
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0`);
+    await queryRunner.query(`DROP TABLE admin`);
+  }
 }

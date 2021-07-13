@@ -4,28 +4,27 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn, ManyToOne, JoinColumn,
+  UpdateDateColumn,
+  // ManyToOne,
+  // JoinColumn,
 } from 'typeorm';
 
-import { Properties } from './Properties';
+// import { Property } from './Property';
 
 @Entity()
-export class Images extends BaseEntity {
+export class Image extends BaseEntity {
   @PrimaryGeneratedColumn({ name: 'image_id' })
   imageId: number;
 
   @Column()
   url: string;
 
-  @ManyToOne(() => Properties, properties => properties.image)
-  @JoinColumn()
-  property: Properties;
+  @Column()
+  property: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
-
 }

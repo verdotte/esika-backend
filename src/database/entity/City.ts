@@ -6,15 +6,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 
-import { Properties } from './Properties';
-
+import { Property } from './Property';
 
 @Entity()
 export class City extends BaseEntity {
-  @PrimaryGeneratedColumn({ name: 'city_id'})
+  @PrimaryGeneratedColumn({ name: 'city_id' })
   cityId: number;
 
   @Column()
@@ -29,8 +28,7 @@ export class City extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => Properties, property => property.city)
+  @OneToMany(() => Property, (property) => property.city)
   @JoinColumn()
-  property: Properties[];
-
+  property: Property[];
 }

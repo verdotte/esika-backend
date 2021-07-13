@@ -1,9 +1,8 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class PaymentTable1625661570971 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
         CREATE TABLE IF NOT EXISTS payment (
             payment_id BIGINT(11) NOT NULL AUTO_INCREMENT,
             amount VARCHAR(250) NOT NULL,
@@ -23,10 +22,10 @@ export class PaymentTable1625661570971 implements MigrationInterface {
                 ON DELETE CASCADE   
         )
     `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE payment`);
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0`);
+    await queryRunner.query(`DROP TABLE payment`);
+  }
 }

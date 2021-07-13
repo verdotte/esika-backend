@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn, OneToMany, JoinColumn,
+  UpdateDateColumn,
+  OneToMany,
+  JoinColumn,
 } from 'typeorm';
-import { Properties } from './Properties';
+import { Property } from './Property';
 
 @Entity()
 export class Category extends BaseEntity {
@@ -16,7 +18,7 @@ export class Category extends BaseEntity {
   @Column()
   title: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   description: string;
 
   @Column({ default: true })
@@ -28,8 +30,7 @@ export class Category extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => Properties, property => property.category)
+  @OneToMany(() => Property, (property) => property.category)
   @JoinColumn()
-  property: Properties[];
-
+  property: Property[];
 }
