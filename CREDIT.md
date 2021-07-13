@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [version] ~ titile ~ comment ~ by date
+## [version] ~ title ~ comment ~ by date
 
 ### v0.001
 
@@ -14,9 +14,13 @@ All notable changes to this project will be documented in this file.
 
 - Implement get all host endpoint [Implementation] ~ Dan Mugisho ~ July 07, 2021
 
+- Implement get all host endpoint  [Implementation] ~ Dan Mugisho ~ July 11, 2021
+
 - Implement Property Creation [Implementation] ~ Verdotte Aututu ~ July 13, 2021
 
 - Add Category & City Seeders [Configuration] ~ Verdotte Aututu ~ July 13, 2021
+
+- Implement get Admin profile endpoint  [Implementation] ~ Dan Mugisho ~ July 14, 2021
 
 #### Launch v0.001 ~ ESIKA API
 

@@ -29,7 +29,7 @@ export class UserController {
    * @param {IRequestWithUser} req
    * @param {Response} res
    * @returns {object} user payload
-   * @memberof AuthController
+   * @memberof UserController
    */
   getProfile = async (
     req: IRequestWithUser,
@@ -52,7 +52,7 @@ export class UserController {
    * @param {Request} req
    * @param {Response} res
    * @returns {array} users payload
-   * @memberof AuthController
+   * @memberof UserController
    */
   getAllHost = async (req: Request, res: Response): Promise<Response> => {
     const userList = await this.userService.findByUserType('host');

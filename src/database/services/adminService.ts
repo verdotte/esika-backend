@@ -31,4 +31,18 @@ export class AdminService {
   create = async (adminData: CreateAdminDto): Promise<Admin> => {
     return await Admin.create(adminData).save();
   };
+
+  /**
+   * Find By Id
+   * @author Dan Mugsio
+   * @since 0.001
+   *
+   * @param {number} adminId
+   * @returns {Admin | null} admin payload
+   * @memberof AdminService
+   */
+  findById = async (adminId: number): Promise<Admin | null> => {
+    const admin = await Admin.findOne({ adminId });
+    return admin ?? null;
+  };
 }
