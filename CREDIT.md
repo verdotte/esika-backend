@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 
 - Implement Property Creation [Implementation] ~ Verdotte Aututu ~ July 13, 2021
 
+- Add Category & City Seeders [Configuration] ~ Verdotte Aututu ~ July 13, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats

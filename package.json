@@ -14,7 +14,9 @@
     "create-table": "npm run typeorm:cli -- migration:run",
     "drop-table": "npm run typeorm:cli -- schema:drop",
     "create-table:test": "cross-env NODE_ENV=test npm run typeorm:cli -- migration:run",
-    "drop-table:test": "cross-env NODE_ENV=test npm run typeorm:cli -- schema:drop"
+    "drop-table:test": "cross-env NODE_ENV=test npm run typeorm:cli -- schema:drop",
+    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +41,7 @@
     "rimraf": "^3.0.2",
     "twilio": "^3.65.0",
     "typeorm": "^0.2.34",
+    "typeorm-seeding": "^1.6.1",
     "typescript": "^4.2.2"
   },
   "devDependencies": {
