@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rimraf ./build && tsc",
     "start": "cross-env NODE_ENV=production ts-node build/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "pretest": "npm run drop-table:test && npm run create-table:test",
     "test": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles --forceExit",
     "lint": "eslint . --ext .ts",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts",

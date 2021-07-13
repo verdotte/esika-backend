@@ -2,7 +2,7 @@
 import { App } from '../../app';
 import { routes } from '../../routes';
 import supertest from 'supertest';
-import { adminData, adminLoginData, adminLoginFailPasswordData, adminLoginFailUsernameData } from '../../__mocks__/dummyData';
+import { adminData, adminLoginData } from '../../__mocks__/dummyData';
 import { urlPrefix } from '../../__mocks__/variable'; 
 import { CREATED, NOT_FOUND, OK, UNAUTHORIZED } from '../../constants/statusCodes';
 import { initializeDB } from '../../database/initializeDB';
@@ -40,16 +40,16 @@ describe('Admin controller', () => {
             const app = new App(routes).getServer();
            const result = await supertest(app)
                 .post(`${urlPrefix}/admin/login`)
-                .send(adminLoginFailUsernameData);
+                .send({ username: 'Joolo', password: adminLoginData.password});
             expect(result.status).toBe(NOT_FOUND);
-            expect(result.body.message).toBe(`${adminLoginFailUsernameData.username} does not exist`);
+            expect(result.body.message).toBe(`Joolo does not exist`);
             done();
         });
         test('Should fail to login with wrong password', async(done) => {
             const app = new App(routes).getServer();
            const result = await supertest(app)
                 .post(`${urlPrefix}/admin/login`)
-                .send(adminLoginFailPasswordData);
+                .send({username: adminLoginData.username, password: 'lalax12'});
             expect(result.status).toBe(UNAUTHORIZED);
             expect(result.body.message).toBe('Incorrect password');
             done();

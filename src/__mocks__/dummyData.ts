@@ -12,11 +12,3 @@ export const adminLoginData: LoginAdminDto = {
   username: 'Jololo',
   password: 'lalax$123',
 };
-export const adminLoginFailUsernameData: LoginAdminDto = {
-  username: 'Joolo',
-  password: 'lalax$123',
-};
-export const adminLoginFailPasswordData: LoginAdminDto = {
-  username: 'Jololo',
-  password: 'lalax$12',
-};
