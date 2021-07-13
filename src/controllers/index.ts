@@ -1,8 +1,13 @@
 import { AuthController } from './authController';
 import { AdminController } from './adminController';
 import { UserController } from './userController';
+import { PropertyController } from './propertyController';
 import { responseUtil, tokenUtil, passwordUtil } from '../utils';
-import { adminService, userService } from '../database/services';
+import {
+  adminService,
+  userService,
+  propertyService,
+} from '../database/services';
 import { twilioService } from '../plugins/twilo';
 
 export const authController = new AuthController(
@@ -20,3 +25,8 @@ export const adminController = new AdminController(
 );
 
 export const userController = new UserController(responseUtil, userService);
+
+export const propertyController = new PropertyController(
+  responseUtil,
+  propertyService,
+);

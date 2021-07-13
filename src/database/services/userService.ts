@@ -2,7 +2,7 @@ import { User } from '../entity/User';
 import { CreateUserDto } from '../../dtos/createUserDto';
 
 /**
- * User Controller
+ * User Service
  */
 export class UserService {
   /**
@@ -63,11 +63,11 @@ export class UserService {
    * @memberof UserService
    */
   create = async (userData: CreateUserDto): Promise<User> => {
-    return User.create(userData).save();
+    return await User.create(userData).save();
   };
 
   /**
-   * Find By userType
+   * Find By User Type
    * @author Dan Mugisho
    * @since 0.001
    *
@@ -77,7 +77,7 @@ export class UserService {
    */
 
   findByUserType = async (userType: string): Promise<User[]> => {
-    const users = await User.find({ where: { userType: userType }});
+    const users = await User.find({ where: { userType } });
     return users;
   };
 }

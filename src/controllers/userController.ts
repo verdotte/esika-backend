@@ -26,7 +26,7 @@ export class UserController {
    * @author Verdotte Aututu
    * @since 0.001
    *
-   * @param {Request} req
+   * @param {IRequestWithUser} req
    * @param {Response} res
    * @returns {object} user payload
    * @memberof AuthController
@@ -45,7 +45,7 @@ export class UserController {
   };
 
   /**
-   * Get Users by userType
+   * Get All Host
    * @author Dan Mugisho
    * @since 0.001
    *
@@ -54,11 +54,8 @@ export class UserController {
    * @returns {array} users payload
    * @memberof AuthController
    */
-  getAllHost = async (
-    req: IRequestWithUser,
-    res: Response,
-  ): Promise<Response> => {
-    const userList = await this.userService.findByUserType("host");
+  getAllHost = async (req: Request, res: Response): Promise<Response> => {
+    const userList = await this.userService.findByUserType('host');
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,

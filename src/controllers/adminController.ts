@@ -40,7 +40,7 @@ export class AdminController {
    * @param {Request} req
    * @param {Response} res
    * @returns {object} user payload
-   * @memberof AuthController
+   * @memberof AdminController
    */
   createAdmin = async (req: Request, res: Response): Promise<Response> => {
     const adminData: CreateAdminDto = req.body;
@@ -68,7 +68,7 @@ export class AdminController {
    * @param {Request} req
    * @param {Response} res
    * @returns {object} user payload
-   * @memberof AuthController
+   * @memberof AdminController
    */
   login = async (req: Request, res: Response): Promise<Response> => {
     const adminInfo: LoginAdminDto = req.body;

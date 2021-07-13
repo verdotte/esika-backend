@@ -37,4 +37,40 @@ export class TokenUtil {
       return error;
     }
   };
+
+  /**
+   * Ran
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {number} min
+   * @param {number} max
+   * @returns {number} random number
+   * @memberof TokenUtil
+   */
+  private ran = (min: number, max: number): number => {
+    const random: number = Math.random();
+    return Math.floor(random * (max - min) + min);
+  };
+
+  /**
+   * Slug Generator
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {number} length
+   * @returns {string} random code
+   * @memberof TokenUtil
+   */
+  slugGenerator = (length: number): string => {
+    length = length || 10;
+
+    const allowsChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let code = '';
+    while (code.length < length) {
+      const charIndex: number = this.ran(0, allowsChars.length - 1);
+      code += allowsChars[charIndex];
+    }
+    return code;
+  };
 }

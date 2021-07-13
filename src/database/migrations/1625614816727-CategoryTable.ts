@@ -1,9 +1,8 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CategoryTable1625614816727 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
         CREATE TABLE IF NOT EXISTS category (
             category_id BIGINT(11) NOT NULL AUTO_INCREMENT,
             title VARCHAR(250) NOT NULL,
@@ -14,10 +13,10 @@ export class CategoryTable1625614816727 implements MigrationInterface {
             PRIMARY KEY (category_id)
         )
     `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE category`);
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0`);
+    await queryRunner.query(`DROP TABLE category`);
+  }
 }

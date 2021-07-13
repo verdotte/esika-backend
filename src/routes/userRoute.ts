@@ -7,7 +7,7 @@ export class UserRoute implements IRoute {
   public path = '/user';
   public router = Router();
 
-  constructor(private readonly UserController: UserController) {
+  constructor(private readonly userController: UserController) {
     this.initializeRoutes();
   }
 
@@ -16,12 +16,10 @@ export class UserRoute implements IRoute {
       .route(`${this.path}/profile`)
       .get(
         asyncHandler(checkAuthUser),
-        asyncHandler(this.UserController.getProfile),
+        asyncHandler(this.userController.getProfile),
       );
     this.router
       .route(`${this.path}/host`)
-      .get(
-        asyncHandler(this.UserController.getAllHost),
-      );
+      .get(asyncHandler(this.userController.getAllHost));
   }
 }

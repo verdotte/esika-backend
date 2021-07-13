@@ -6,18 +6,18 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 
-import { Payment } from "./Payment";
-import { Properties } from "./Properties";
+import { Payment } from './Payment';
+import { Property } from './Property';
 
 export enum UserType {
   HOST = 'host',
   NORMAL = 'normal',
 }
 
-@Entity()
+@Entity({ name: 'user' })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn({ name: 'user_id' })
   userId: number;
@@ -44,19 +44,20 @@ export class User extends BaseEntity {
     name: 'user_type',
     type: 'enum',
     enum: UserType,
+    default: UserType.NORMAL,
   })
   userType: UserType;
 
   @Column({ default: true })
   active: boolean;
 
-  @OneToMany(() => Payment, payment => payment.user)
+  @OneToMany(() => Payment, (payment) => payment.user)
   @JoinColumn()
   payment: Payment[];
 
-  @OneToMany(() => Properties, property => property.user)
+  @OneToMany(() => Property, (property) => property.user)
   @JoinColumn()
-  property: Properties[];
+  property: Property[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
