@@ -1,7 +1,7 @@
 import { createConnection } from 'typeorm';
 import config from '../../ormconfig';
 
-export const intializeDB = async (): Promise<void> => {
+export const initializeDB = async (): Promise<void> => {
   try {
     const conn = await createConnection(config);
     console.log(
