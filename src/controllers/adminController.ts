@@ -10,6 +10,7 @@ import {
 } from '../constants/responseMessages';
 import { CreateAdminDto } from '../dtos/createAdminDto';
 import { LoginAdminDto } from '../dtos/loginAdminDto';
+import { IRequestWithAdmin } from '../interfaces/requestWithAdmin.interface';
 
 /**
  * Admin Controller
@@ -103,4 +104,28 @@ export class AdminController {
       res,
     });
   };
+
+  /**
+   * Get Admin Profile
+   * @author Dan Mugisho
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {object} user payload
+   * @memberof AdminController
+   */
+  getAdminProfile = async (
+    req: IRequestWithAdmin,
+    res: Response,
+  ): Promise<Response> => {
+    const { currentAdmin } = req;
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `success`,
+      data: { profile: currentAdmin },
+      res,
+    });
+  };
+
 }
