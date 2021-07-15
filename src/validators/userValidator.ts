@@ -29,4 +29,15 @@ const verifyUser = (req: Request, res: Response, next: NextFunction) => {
   validatorHandler(req, res, schema, next);
 };
 
-export const userValidator = { signup, login, verifyUser };
+const updateUserInfo = (req: Request, res: Response, next: NextFunction) => {
+  const schema = Joi.object().keys({
+    firstName: Joi.string().trim().min(2).required(),
+    lastName: Joi.string().trim().min(2).required(),
+    email: Joi.string().trim().email().required(),
+    picture: Joi.string().trim()
+  });
+
+  validatorHandler(req, res, schema, next);
+};
+
+export const userValidator = { signup, login, verifyUser, updateUserInfo };
