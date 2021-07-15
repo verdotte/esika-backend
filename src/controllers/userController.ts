@@ -72,7 +72,7 @@ export class UserController {
    *
    * @param {Request} req
    * @param {Response} res
-   * @returns {array} users payload
+   * @returns {User} user payload
    * @memberof UserController
    */
    updateInfo = async (req: Request, res: Response): Promise<Response> => {
