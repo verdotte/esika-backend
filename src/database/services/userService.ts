@@ -1,5 +1,6 @@
 import { User } from '../entity/User';
 import { CreateUserDto } from '../../dtos/createUserDto';
+import { UpdateUserDto } from '../../dtos/updateUserDto';
 
 /**
  * User Service
@@ -80,4 +81,25 @@ export class UserService {
     const users = await User.find({ where: { userType } });
     return users;
   };
+
+    /**
+   * Update
+   * @author Desire Kaleba
+   * @since 0.001
+   *
+   * @param {number} userId
+   * @param {UpdateUserDto} updatedInfo
+   * @returns {User | null} user payload
+   * @memberof UserService
+   */
+     update = async (userId: number, updatedInfo: UpdateUserDto): Promise<User | null> => {
+       const user = await this.findById(userId);
+       if (user) {
+          User.merge(user, updatedInfo);
+          const updatedUser = await User.save(user);
+          return updatedUser;
+       }
+       return null;
+       
+    };
 }
