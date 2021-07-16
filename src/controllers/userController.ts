@@ -5,6 +5,8 @@ import { OK } from '../constants/statusCodes';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
 import { UpdateUserDto } from '../dtos/updateUserDto'; 
 import { updated } from '../constants/responseMessages';
+import { paginator } from '../utils/paginator';
+import { PAGE_LIMIT } from '../constants/shared';
 
 /**
  * User Controller
@@ -56,15 +58,22 @@ export class UserController {
    * @returns {array} users payload
    * @memberof UserController
    */
-  getAllHost = async (req: Request, res: Response): Promise<Response> => {
-    const userList = await this.userService.findByUserType('host');
+  getAllHost = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const { page = 0 } = req.query;
+    const currentPage: number = +page;
+    const pageNumber = paginator(currentPage, PAGE_LIMIT);
+    const userList = await this.userService.findByUserType('host', pageNumber);
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { host: userList },
+      data: { host: userList, currentPage, pageSize: PAGE_LIMIT },
       res,
     });
   };
+
   /**
    * Update info
    * @author Desire Kaleba
