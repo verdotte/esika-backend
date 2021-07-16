@@ -18,7 +18,6 @@ export const checkAdminAuth = async (
   const token = authorization.split(' ')[1];
 
   if (!token) {
-    console.log("token");
     return responseUtil.error({
       statusCode: UNAUTHORIZED,
       message: `Unauthorized access for admin`,
