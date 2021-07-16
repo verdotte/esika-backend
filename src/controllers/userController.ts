@@ -3,6 +3,8 @@ import { ResponseUtil } from '../utils';
 import { UserService } from '../database/services';
 import { OK } from '../constants/statusCodes';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
+import { UpdateUserDto } from '../dtos/updateUserDto'; 
+import { updated } from '../constants/responseMessages';
 
 /**
  * User Controller
@@ -62,5 +64,28 @@ export class UserController {
       data: { host: userList },
       res,
     });
+  };
+  /**
+   * Update info
+   * @author Desire Kaleba
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {User} user payload
+   * @memberof UserController
+   */
+   updateProfile = async (req: Request, res: Response): Promise<Response> => {
+     const userId = parseInt(req.params.userId, 10);
+     const updatedInfo: UpdateUserDto = req.body;
+
+     const updatedUser = await this.userService.update(userId, updatedInfo);
+    
+     return this.responseUtil.success({
+        statusCode: OK,
+        message: updated('Your information'),
+        data: updatedUser,
+        res,
+     });
   };
 }

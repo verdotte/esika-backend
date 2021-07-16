@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { IRoute } from '../interfaces/route.interface';
 import { UserController } from '../controllers/userController';
 import { asyncHandler, checkAuthUser } from '../middlewares';
+import { userValidator } from '../validators/userValidator';
 
 export class UserRoute implements IRoute {
   public path = '/user';
@@ -21,5 +22,11 @@ export class UserRoute implements IRoute {
     this.router
       .route(`${this.path}/host`)
       .get(asyncHandler(this.userController.getAllHost));
+    this.router
+      .route(`${this.path}/profile/:userId`)
+      .put(
+        asyncHandler(checkAuthUser),
+        userValidator.updateUserInfo,
+        asyncHandler(this.userController.updateProfile));
   }
 }
