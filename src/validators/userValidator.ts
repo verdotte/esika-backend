@@ -31,9 +31,9 @@ const verifyUser = (req: Request, res: Response, next: NextFunction) => {
 
 const updateUserInfo = (req: Request, res: Response, next: NextFunction) => {
   const schema = Joi.object().keys({
-    firstName: Joi.string().trim().min(2).required(),
-    lastName: Joi.string().trim().min(2).required(),
-    email: Joi.string().trim().email().required(),
+    firstName: Joi.string().trim().min(2),
+    lastName: Joi.string().trim().min(2),
+    email: Joi.string().trim().email(),
     picture: Joi.string().trim()
   });
 

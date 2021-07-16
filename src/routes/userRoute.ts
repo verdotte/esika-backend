@@ -23,10 +23,10 @@ export class UserRoute implements IRoute {
       .route(`${this.path}/host`)
       .get(asyncHandler(this.userController.getAllHost));
     this.router
-      .route(`${this.path}/profile/:userId/update`)
+      .route(`${this.path}/profile/:userId`)
       .put(
-        userValidator.updateUserInfo,
         asyncHandler(checkAuthUser),
-        asyncHandler(this.userController.updateInfo));
+        userValidator.updateUserInfo,
+        asyncHandler(this.userController.updateProfile));
   }
 }

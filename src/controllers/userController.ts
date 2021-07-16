@@ -75,7 +75,7 @@ export class UserController {
    * @returns {User} user payload
    * @memberof UserController
    */
-   updateInfo = async (req: Request, res: Response): Promise<Response> => {
+   updateProfile = async (req: Request, res: Response): Promise<Response> => {
      const userId = parseInt(req.params.userId, 10);
      const updatedInfo: UpdateUserDto = req.body;
 
