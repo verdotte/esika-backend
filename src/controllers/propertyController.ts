@@ -5,6 +5,8 @@ import { created } from '../constants/responseMessages';
 import { CreatePropertyDto } from '../dtos/createPropertyDto';
 import { PropertyService } from '../database/services';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
+import { paginator } from '../utils/paginator';
+import { PAGE_LIMIT } from '../constants/shared';
 
 /**
  * Property Controller
@@ -104,5 +106,60 @@ export class PropertyController {
     });
 
     await this.propertyService.bulkCreateImage(propertyImageData);
+  };
+
+  /**
+   * Get All Property
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} property payload
+   * @memberof PropertyController
+   */
+  getAllProperty = async (req: Request, res: Response): Promise<Response> => {
+    const { page = 0 } = req.query;
+    const currentPage: number = +page;
+    const pageNumber = paginator(currentPage, PAGE_LIMIT);
+    const propertyList = await this.propertyService.findAll(
+      pageNumber,
+      PAGE_LIMIT,
+    );
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `success`,
+      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      res,
+    });
+  };
+
+  /**
+   * Get All Property
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} property payload
+   * @memberof PropertyController
+   */
+  getUnverifiedProperty = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    const { page = 0 } = req.query;
+    const currentPage: number = +page;
+    const pageNumber = paginator(currentPage, PAGE_LIMIT);
+    const propertyList = await this.propertyService.findAllUnverified(
+      pageNumber,
+      PAGE_LIMIT,
+    );
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `success`,
+      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      res,
+    });
   };
 }

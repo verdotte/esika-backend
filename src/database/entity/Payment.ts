@@ -5,13 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
 } from 'typeorm';
-
-import { User } from "./User";
-import { Package } from "./Package";
 
 export enum Currency {
   CDF = 'cdf',
@@ -33,16 +27,14 @@ export class Payment extends BaseEntity {
   })
   currency: Currency;
 
-  @ManyToOne(() => User, user => user.payment)
-  @JoinColumn()
-  user: User;
+  @Column()
+  user: number;
 
-  @Column({ name: 'expiry_date'})
+  @Column({ name: 'expiry_date' })
   expiryDate: string;
 
-  @OneToMany(() => Package, pack => pack.payment)
-  @JoinColumn()
-  package: Payment[];
+  @Column()
+  package: number;
 
   @Column({ default: true })
   active: boolean;
@@ -52,5 +44,4 @@ export class Payment extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
 }

@@ -5,11 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne, JoinColumn,
 } from 'typeorm';
-
-import { Payment } from "./Payment";
-
 
 export enum Unit {
   MONTH = 'month',
@@ -24,7 +20,7 @@ export class Package extends BaseEntity {
   @Column()
   title: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   description: string;
 
   @Column()
@@ -42,14 +38,9 @@ export class Package extends BaseEntity {
   })
   unit: Unit;
 
-  @ManyToOne(() => Payment, payment => payment.package)
-  @JoinColumn()
-  payment: Payment;
-
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
 }
