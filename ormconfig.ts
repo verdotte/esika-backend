@@ -26,7 +26,7 @@ const config: any = {
   password: DB_PASSWORD,
   database,
   synchronize: NODE_ENV === 'production' ? false : true,
-  logging: false,
+  logging: NODE_ENV === 'production' ? false : true,
   entities: [`${dir}/database/entity/**/*.{ts,js}`],
   migrations: [`${dir}/database/migrations/**/*.{ts,js}`],
   subscribers: [`${dir}/database/subscriber/**/*.{ts,js}`],
