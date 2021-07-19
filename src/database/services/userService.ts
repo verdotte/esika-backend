@@ -1,6 +1,7 @@
 import { User } from '../entity/User';
 import { CreateUserDto } from '../../dtos/createUserDto';
 import { UpdateUserDto } from '../../dtos/updateUserDto';
+import { PAGE_LIMIT } from '../../constants/shared';
 
 /**
  * User Service
@@ -73,12 +74,13 @@ export class UserService {
    * @since 0.001
    *
    * @param {string} userType
+   * @param {number} pageNumber
    * @returns {User[]} users payload
    * @memberof UserService
    */
 
-  findByUserType = async (userType: string): Promise<User[]> => {
-    const users = await User.find({ where: { userType } });
+  findByUserType = async (userType: string, pageNumber: number): Promise<User[]> => {
+    const users = await User.find({ where: { userType }, take: PAGE_LIMIT, skip: pageNumber });
     return users;
   };
 
