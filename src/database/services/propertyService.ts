@@ -2,7 +2,8 @@ import { getConnection } from 'typeorm';
 import { CreatePropertyDto } from '../../dtos/createPropertyDto';
 import { Property } from '../entity/Property';
 import { Image } from '../entity/Image';
-import { findAllQuery, getUnverifiedQuery } from '../query/propertyQuery';
+import { findAllQuery, getUnverifiedQuery, findAllByCategoryQuery } from '../query/propertyQuery';
+
 
 /**
  * Property Service
@@ -52,6 +53,7 @@ export class PropertyService {
     const properties = await getConnection().manager.query(
       findAllQuery(page, pageSize),
     );
+
     return properties;
   };
 
@@ -72,6 +74,25 @@ export class PropertyService {
     const properties = await getConnection().manager.query(
       getUnverifiedQuery(page, pageSize),
     );
+    return properties;
+  };
+
+  /**
+   * Find All By Category
+   * @author Dan Mugisho
+   * @since 0.001
+   *
+   * @param {number} category
+   * @param {number} page
+   * @param {number} pageSize
+   * @returns {Array[unknown]}
+   * @memberof PropertyService
+   */
+  findAllByCategory = async (category: number, page: number, pageSize: number): Promise<unknown[]> => {
+    const properties = await getConnection().manager.query(
+      findAllByCategoryQuery(category, page, pageSize),
+    );
+
     return properties;
   };
 }

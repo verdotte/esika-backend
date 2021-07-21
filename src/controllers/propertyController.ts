@@ -7,6 +7,7 @@ import { PropertyService } from '../database/services';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
 import { paginator } from '../utils/paginator';
 import { PAGE_LIMIT } from '../constants/shared';
+import category from '../database/seeds/category';
 
 /**
  * Property Controller
@@ -152,6 +153,35 @@ export class PropertyController {
     const currentPage: number = +page;
     const pageNumber = paginator(currentPage, PAGE_LIMIT);
     const propertyList = await this.propertyService.findAllUnverified(
+      pageNumber,
+      PAGE_LIMIT,
+    );
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `success`,
+      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      res,
+    });
+  };
+
+  /**
+   * Get By Category
+   * @author Dan Mugisho
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {array} property payload
+   * @memberof PropertyController
+   */
+  getByCategory = async (req: Request, res: Response): Promise<Response> => {
+    const { page = 0 } = req.query;
+    const currentPage: number = +page;
+    const pageNumber = paginator(currentPage, PAGE_LIMIT);
+    const { category = 0 } = req.params;
+    const categoryProperty = +category;
+    const propertyList = await this.propertyService.findAllByCategory(
+      categoryProperty,
       pageNumber,
       PAGE_LIMIT,
     );

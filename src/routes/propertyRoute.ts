@@ -28,5 +28,10 @@ export class PropertyRoute implements IRoute {
         asyncHandler(checkAdminAuth),
         asyncHandler(this.propertyController.getUnverifiedProperty),
       );
+    this.router
+      .route(`${this.path}/:category`)
+      .get(
+        asyncHandler(this.propertyController.getByCategory),
+      );
   }
 }
