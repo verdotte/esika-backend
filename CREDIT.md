@@ -24,6 +24,8 @@ All notable changes to this project will be documented in this file.
 
 - Implement get all properties randomly [Implementation] ~ Verdotte Aututu ~ July 07, 2021
 
+- Fix start command in production [Project Config] ~ Verdotte Aututu ~ July 23, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats
