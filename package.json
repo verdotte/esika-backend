@@ -4,17 +4,20 @@
   "description": "Esika API Project",
   "main": "index.ts",
   "scripts": {
+    "build:watch": "tsc --watch",
     "build": "rimraf ./build && tsc",
-    "start": "cross-env NODE_ENV=production ts-node build/index.js",
+    "start": "cross-env NODE_ENV=production node build/index.js",
     "dev": "nodemon src/index.ts",
     "pretest": "npm run drop-table:test && npm run create-table:test",
     "test": "cross-env NODE_ENV=test jest --coverage --runInBand --detectOpenHandles --forceExit",
     "lint": "eslint . --ext .ts",
-    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts",
+    "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.js",
     "create-table": "npm run typeorm:cli -- migration:run",
     "drop-table": "npm run typeorm:cli -- schema:drop",
     "create-table:test": "cross-env NODE_ENV=test npm run typeorm:cli -- migration:run",
     "drop-table:test": "cross-env NODE_ENV=test npm run typeorm:cli -- schema:drop",
+    "create-table:prod": "cross-env NODE_ENV=production npm run typeorm:cli -- migration:run",
+    "drop-table:prod": "cross-env NODE_ENV=production npm run typeorm:cli -- schema:drop",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
     "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
@@ -32,7 +35,6 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
-    "firebase-admin": "^9.9.0",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
@@ -46,6 +48,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@types/faker": "^5.5.7",
     "@types/jest": "^26.0.22",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/supertest": "^2.0.11",

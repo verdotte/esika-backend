@@ -1,4 +1,6 @@
-import dotenv from 'dotenv';
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -18,7 +20,7 @@ const dir = NODE_ENV === 'production' ? 'build' : 'src';
 const database =
   NODE_ENV === 'production' ? PROD_DB : NODE_ENV === 'test' ? TEST_DB : DEV_DB;
 
-const config: any = {
+module.exports = {
   type: 'mysql',
   host: DB_HOST,
   port: Number(DB_PORT),
@@ -38,5 +40,3 @@ const config: any = {
     subscribersDir: `${dir}/database/subscriber`,
   },
 };
-
-export = config;
