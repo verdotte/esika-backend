@@ -1,9 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import { IRoute } from './interfaces/route.interface';
 import logger, { httpLogStream } from './utils/logger';
+import { OK, BAD_REQUEST, FORBIDDEN } from './constants/statusCodes';
 
 export class App {
   public app: express.Application;
@@ -13,6 +14,7 @@ export class App {
     this.app = express();
     this.initializeMiddlewares();
     this.initializeroutes(routes);
+    this.initializeDefaultRoutes();
   }
 
   private initializeMiddlewares(): void {
@@ -23,9 +25,32 @@ export class App {
     this.app.use(cors());
   }
 
-  private initializeroutes(routes: IRoute[]) {
+  private initializeroutes(routes: IRoute[]): void {
     routes.forEach((route) => {
       this.app.use('/api/v1/', route.router);
+    });
+  }
+
+  private initializeDefaultRoutes(): void {
+    this.app.get('/', (req: Request, res: Response) => {
+      return res.status(OK).json({
+        statusCode: OK,
+        message: `Welcome to ESIKA API`,
+      });
+    });
+
+    this.app.all('/', (req: Request, res: Response) => {
+      return res.status(BAD_REQUEST).json({
+        statusCode: BAD_REQUEST,
+        message: `Invalid method`,
+      });
+    });
+
+    this.app.use('*', (req: Request, res: Response) => {
+      return res.status(FORBIDDEN).json({
+        statusCode: FORBIDDEN,
+        message: `Invalid route`,
+      });
     });
   }
 

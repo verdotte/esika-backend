@@ -26,6 +26,8 @@ All notable changes to this project will be documented in this file.
 
 - Fix start command in production [Project Config] ~ Verdotte Aututu ~ July 23, 2021
 
+- Deploy & Add default application endpoints [Deployment & Project Config] ~ Verdotte Aututu ~ July 23, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats
