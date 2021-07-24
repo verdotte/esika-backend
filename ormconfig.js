@@ -39,4 +39,10 @@ module.exports = {
     entitiesDir: `${dir}/database/entity`,
     subscribersDir: `${dir}/database/subscriber`,
   },
+  ssl: true,
+  extra: {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
 };
