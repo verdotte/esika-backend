@@ -4,10 +4,11 @@ import logger from '../utils/logger';
 export const initializeDB = async (): Promise<void> => {
   try {
     const conn = await createConnection();
-    logger.info(
+    console.log(
       `Database: ${conn.options.database} is successfully initialized`,
     );
   } catch (error) {
-    logger.info(`Database failed to connect ${error.message}`);
+    console.log('>>>', error);
+    console.log(`Database failed to connect ${error.message}`);
   }
 };
