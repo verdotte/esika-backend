@@ -1,0 +1,834 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Esika, real estate app API documentation",
+        "version": "1.0.0",
+        "title": "ESIKA docs",
+        "contact": {
+            "email": "contact@esika.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:5000",
+    "basePath": "/api/v1",
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentication routes"
+        },
+        {
+            "name": "Admin",
+            "description": "Admin routes"
+        },
+        {
+            "name": "User",
+            "description": "User routes"
+        },
+        {
+            "name": "Property",
+            "description": "Property routes"
+        }
+    ],
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register user",
+                "description": "Register user",
+                "operationId": "registerUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Register user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/signupUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/signupUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/verify": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Verify user's phone number",
+                "description": "Verify user's phone number",
+                "operationId": "verifyUserPhone",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Verify user's phone object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/verifyUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/verifyUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user",
+                "description": "Login user",
+                "operationId": "loginUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Login user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loginUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/verifyUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/resend": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Resend verification code",
+                "description": "Resend verification code",
+                "operationId": "resendCode",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "resend verification code object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loginUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/admin/signup": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Register Admin",
+                "description": "Register Admin",
+                "operationId": "registerAdmin",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Register user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createAdminDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/createAdminResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/login": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Login Admin",
+                "description": "Login Admin",
+                "operationId": "loginAdmin",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Register user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loginAdminDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/createAdminResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/profile": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get Admin's profile",
+                "description": "Get Admin's profile",
+                "operationId": "getAdmin",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/getAdminProfileResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get User's profile",
+                "description": "Get User's profile",
+                "operationId": "getUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/getAdminProfileResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/host": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all host users",
+                "description": "Get all host users",
+                "operationId": "getHostUsers",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/getHostUsersResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/profile/{userId}": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user's profile",
+                "description": "Update user's profile",
+                "operationId": "updateUser",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Update user",
+                        "schema": {
+                            "$ref": "#/definitions/updateUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/updateUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/property": {
+            "post": {
+                "tags": [
+                    "Property"
+                ],
+                "summary": "Create a property",
+                "description": "Create a property",
+                "operationId": "add property",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "create property",
+                        "schema": {
+                            "$ref": "#/definitions/createPropertyDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/createPropertyResponse"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Property"
+                ],
+                "summary": "Get all properties",
+                "description": "Get all properties",
+                "operationId": "getAllProperties",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/getAllPropertiesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/property/unverified": {
+            "get": {
+                "tags": [
+                    "Property"
+                ],
+                "summary": "Get all unverified properties",
+                "description": "Get all unverified properties",
+                "operationId": "getAllUnverifiedProperties",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/getAllPropertiesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/property/{category}": {
+            "get": {
+                "tags": [
+                    "Property"
+                ],
+                "summary": "Get all properties by category",
+                "description": "Get all properties by category",
+                "operationId": "getAllCategorizedProperties",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/getAllPropertiesResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "signupUserDto": {
+            "type": "object",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "description": "user's phone number"
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "user's first name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "user's last name"
+                }
+            }
+        },
+        "signupUserResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "token": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "verifyUserDto": {
+            "type": "object",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "description": "user's phone number"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Twilio code"
+                }
+            }
+        },
+        "verifyUserResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "token": {
+                            "type": "string"
+                        },
+                        "phoneNumber": {
+                            "type": "string"
+                        },
+                        "fullName": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "loginUserDto": {
+            "type": "object",
+            "properties": {
+                "phoneNumber": {
+                    "type": "string",
+                    "description": "user's phone number"
+                }
+            }
+        },
+        "createAdminDto": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "description": "admin's user"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "admin's password"
+                },
+                "phoneNumber": {
+                    "type": "string",
+                    "description": "admin's phone number"
+                },
+                "role": {
+                    "type": "string",
+                    "description": "admin's role"
+                }
+            }
+        },
+        "createAdminResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "token": {
+                            "type": "string"
+                        },
+                        "phoneNumber": {
+                            "type": "string"
+                        },
+                        "fullName": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "loginAdminDto": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "description": "admin's user"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "admin's password"
+                }
+            }
+        },
+        "getAdminProfileResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "profile": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "getHostUsersResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "host": {
+                            "type": "object",
+                            "properties": {
+                                "users": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/userModel"
+                                    }
+                                }
+                            }
+                        },
+                        "currentPage": {
+                            "type": "integer"
+                        },
+                        "pageSize": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "userModel": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "integer"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "phoneNumber": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "verified": {
+                    "type": "boolean"
+                },
+                "userType": {
+                    "type": "string"
+                },
+                "active": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "updateUserDto": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "description": "new first name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "new last name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "new email"
+                },
+                "picture": {
+                    "type": "string",
+                    "description": "new picture url"
+                }
+            }
+        },
+        "updateUserResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "$ref": "#/definitions/userModel"
+                }
+            }
+        },
+        "createPropertyDto": {
+            "type": "object",
+            "required": [
+                "title",
+                "description",
+                "price",
+                "location",
+                "category",
+                "city",
+                "type",
+                "bathroom",
+                "image"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "lat": {
+                    "type": "integer"
+                },
+                "lng": {
+                    "type": "integer"
+                },
+                "category": {
+                    "type": "number"
+                },
+                "city": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "bedroom": {
+                    "type": "integer"
+                },
+                "bathroom": {
+                    "type": "boolean"
+                },
+                "squareFeet": {
+                    "type": "string"
+                },
+                "parking": {
+                    "type": "boolean"
+                },
+                "balcony": {
+                    "type": "boolean"
+                },
+                "image": {
+                    "type": "array",
+                    "items": {}
+                }
+            }
+        },
+        "createPropertyResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object"
+                }
+            }
+        },
+        "getAllPropertiesResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "propertyList": {
+                            "type": "object"
+                        },
+                        "currentPage": {
+                            "type": "integer"
+                        },
+                        "pageSize": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
