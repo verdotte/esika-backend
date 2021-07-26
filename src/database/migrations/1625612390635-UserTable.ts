@@ -10,7 +10,7 @@ export class UserTable1625612390635 implements MigrationInterface {
             email VARCHAR(250) NULL,
             phone_number VARCHAR(250) NOT NULL,
             picture VARCHAR(250) NULL,
-            user_type ENUM('normal', 'host'),
+            user_type ENUM('normal', 'agent'),
             active BOOL NOT NULL DEFAULT 1,
             verified BOOL NOT NULL DEFAULT 0,
             created_at TIMESTAMP NOT NULL DEFAULT NOW(),

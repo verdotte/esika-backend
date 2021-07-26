@@ -3,10 +3,11 @@ import { ResponseUtil } from '../utils';
 import { UserService } from '../database/services';
 import { OK } from '../constants/statusCodes';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
-import { UpdateUserDto } from '../dtos/updateUserDto'; 
+import { UpdateUserDto } from '../dtos/updateUserDto';
 import { updated } from '../constants/responseMessages';
 import { paginator } from '../utils/paginator';
 import { PAGE_LIMIT } from '../constants/shared';
+import { UserType } from '../database/entity/User';
 
 /**
  * User Controller
@@ -50,7 +51,7 @@ export class UserController {
 
   /**
    * Get All Host
-   * @author Dan Mugisho
+   * @author Dan Mugisho, Verdotte Aututu
    * @since 0.001
    *
    * @param {Request} req
@@ -58,18 +59,18 @@ export class UserController {
    * @returns {array} users payload
    * @memberof UserController
    */
-  getAllHost = async (
-    req: Request,
-    res: Response
-  ): Promise<Response> => {
+  getAllAgent = async (req: Request, res: Response): Promise<Response> => {
     const { page = 0 } = req.query;
     const currentPage: number = +page;
     const pageNumber = paginator(currentPage, PAGE_LIMIT);
-    const userList = await this.userService.findByUserType('host', pageNumber);
+    const agentList = await this.userService.findByUserType(
+      UserType.AGENT,
+      pageNumber,
+    );
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { host: userList, currentPage, pageSize: PAGE_LIMIT },
+      data: { agentList, currentPage, pageSize: PAGE_LIMIT },
       res,
     });
   };
@@ -84,17 +85,17 @@ export class UserController {
    * @returns {User} user payload
    * @memberof UserController
    */
-   updateProfile = async (req: Request, res: Response): Promise<Response> => {
-     const userId = parseInt(req.params.userId, 10);
-     const updatedInfo: UpdateUserDto = req.body;
+  updateProfile = async (req: Request, res: Response): Promise<Response> => {
+    const userId = parseInt(req.params.userId, 10);
+    const updatedInfo: UpdateUserDto = req.body;
 
-     const updatedUser = await this.userService.update(userId, updatedInfo);
-    
-     return this.responseUtil.success({
-        statusCode: OK,
-        message: updated('Your information'),
-        data: updatedUser,
-        res,
-     });
+    const updatedUser = await this.userService.update(userId, updatedInfo);
+
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: updated('Your information'),
+      data: updatedUser,
+      res,
+    });
   };
 }

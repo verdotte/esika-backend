@@ -27,7 +27,8 @@
       "baseUrl": "/",
    },
    "include": [
-      "src/**/*"
+      "src/**/*",
+      "src/docs/swagger.json"
    ],
    "exclude" : [
       "src/__tests__/*.test.ts",
