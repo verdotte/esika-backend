@@ -3,12 +3,9 @@ import { ResponseUtil } from '../utils';
 import { CityService } from '../database/services/cityService';
 import { OK } from '../constants/statusCodes';
 
-import { IRequestWithAdmin } from '../interfaces/requestWithAdmin.interface';
-
 /**
  * City Controller
  */
-
 export class CityController {
   /**
    * @constructor
@@ -35,7 +32,7 @@ export class CityController {
    */
 
   getAllCities = async (
-    req: IRequestWithAdmin,
+    req: Request,
     res: Response,
   ): Promise<Response> => {
     const cityList = await this.cityService.findAll();
@@ -43,7 +40,7 @@ export class CityController {
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { cityList: cityList },
+      data: { cityList },
       res,
     });
 

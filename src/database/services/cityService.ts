@@ -14,7 +14,7 @@ export class CityService {
    * @memberof CityService
    */
 
-  findAll = async (): Promise<unknown[]> => {
+  findAll = async (): Promise<City[]> => {
     const cities = await City.find();
     return cities;
   };

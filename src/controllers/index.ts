@@ -3,12 +3,14 @@ import { AdminController } from './adminController';
 import { UserController } from './userController';
 import { PropertyController } from './propertyController';
 import { CityController } from './cityController';
+import { CategoryController } from './categoryController';
 import { responseUtil, tokenUtil, passwordUtil } from '../utils';
 import {
   adminService,
   userService,
   propertyService,
-  cityService
+  cityService,
+  categoryService
 } from '../database/services';
 import { twilioService } from '../plugins/twilo';
 
@@ -39,4 +41,9 @@ export const propertyController = new PropertyController(
 export const cityController = new CityController(
   responseUtil,
   cityService,
+);
+
+export const categoryController = new CategoryController(
+  responseUtil,
+  categoryService,
 );
