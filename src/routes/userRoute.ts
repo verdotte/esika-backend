@@ -20,13 +20,14 @@ export class UserRoute implements IRoute {
         asyncHandler(this.userController.getProfile),
       );
     this.router
-      .route(`${this.path}/host`)
-      .get(asyncHandler(this.userController.getAllHost));
+      .route(`${this.path}/agent`)
+      .get(asyncHandler(this.userController.getAllAgent));
     this.router
       .route(`${this.path}/profile/:userId`)
       .put(
         asyncHandler(checkAuthUser),
         userValidator.updateUserInfo,
-        asyncHandler(this.userController.updateProfile));
+        asyncHandler(this.userController.updateProfile),
+      );
   }
 }

@@ -13,7 +13,7 @@ import { Payment } from './Payment';
 import { Property } from './Property';
 
 export enum UserType {
-  HOST = 'host',
+  AGENT = 'agent',
   NORMAL = 'normal',
 }
 

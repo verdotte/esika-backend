@@ -11,6 +11,7 @@ import {
 import { created, verified, loginSuccess } from '../constants/responseMessages';
 import { CreateUserDto } from '../dtos/createUserDto';
 import { UserService } from '../database/services';
+import { UserType } from '../database/entity/User';
 
 /**
  * Auth Controller
@@ -48,6 +49,7 @@ export class AuthController {
       phoneNumber,
       firstName,
       lastName,
+      userType: UserType.NORMAL,
     });
 
     await this.twilioService.sendVericationCode(phoneNumber);
@@ -77,10 +79,8 @@ export class AuthController {
     req: Request,
     res: Response,
   ): Promise<Response | boolean> => {
-    const {
-      phoneNumber,
-      code,
-    }: { phoneNumber: string; code: string } = req.body;
+    const { phoneNumber, code }: { phoneNumber: string; code: string } =
+      req.body;
 
     const userFound = await this.userService.findPhoneNumber(phoneNumber);
 
