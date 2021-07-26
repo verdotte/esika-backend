@@ -5,7 +5,9 @@ export * from './propertyService';
 import { UserService } from './userService';
 import { AdminService } from './adminService';
 import { PropertyService } from './propertyService';
+import { CityService } from './cityService';
 
 export const userService = new UserService();
 export const adminService = new AdminService();
 export const propertyService = new PropertyService();
+export const cityService = new CityService()
