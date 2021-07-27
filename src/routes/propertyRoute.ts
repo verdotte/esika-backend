@@ -34,7 +34,7 @@ export class PropertyRoute implements IRoute {
         asyncHandler(this.propertyController.getByCategory),
       );
     this.router
-      .route(`${this.path}/:userId/getAllByUser`)
+      .route(`${this.path}/agent/:userId`)
       .get(
         asyncHandler(this.propertyController.getAllByUser),
       );
