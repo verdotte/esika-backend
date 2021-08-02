@@ -32,6 +32,8 @@ All notable changes to this project will be documented in this file.
 
 - Implement get all cities and categories endpoints [Implementation] ~ Dan Mugisho ~ July 26, 2021
 
+- Fix all property SQL queries [Fix] ~ Verdotte Aututu ~ August 02, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats
