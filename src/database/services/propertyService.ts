@@ -2,8 +2,15 @@ import { getConnection } from 'typeorm';
 import { CreatePropertyDto } from '../../dtos/createPropertyDto';
 import { Property } from '../entity/Property';
 import { Image } from '../entity/Image';
-import { findAllQuery, getUnverifiedQuery, findAllByCategoryQuery, findAllByUserQuery } from '../query/propertyQuery';
+import {
+  findAllQuery,
+  getUnverifiedQuery,
+  findAllByCategoryQuery,
+  findAllByUserQuery,
+  findOneQuery,
+} from '../query/propertyQuery';
 
+import { IProperty } from '../../interfaces/requestWithProperty.interface';
 
 /**
  * Property Service
@@ -30,12 +37,12 @@ export class PropertyService {
    * @since 0.001
    *
    * @param {Image} imageData
-   * @returns {unknown}
+   * @returns {any}
    * @memberof PropertyService
    */
   bulkCreateImage = async (
     imageData: { property: number; url: string }[],
-  ): Promise<unknown> => {
+  ): Promise<any> => {
     return await Image.insert(imageData);
   };
 
@@ -46,10 +53,10 @@ export class PropertyService {
    *
    * @param {number} page
    * @param {number} pageSize
-   * @returns {Array[unknown]}
+   * @returns {Array[IProperty]}
    * @memberof PropertyService
    */
-  findAll = async (page: number, pageSize: number): Promise<unknown[]> => {
+  findAll = async (page: number, pageSize: number): Promise<IProperty[]> => {
     const properties = await getConnection().manager.query(
       findAllQuery(page, pageSize),
     );
@@ -64,13 +71,13 @@ export class PropertyService {
    *
    * @param {number} page
    * @param {number} pageSize
-   * @returns {Array[unknown]}
+   * @returns {Array[IProperty]}
    * @memberof PropertyService
    */
   findAllUnverified = async (
     page: number,
     pageSize: number,
-  ): Promise<unknown[]> => {
+  ): Promise<IProperty[]> => {
     const properties = await getConnection().manager.query(
       getUnverifiedQuery(page, pageSize),
     );
@@ -85,10 +92,14 @@ export class PropertyService {
    * @param {number} category
    * @param {number} page
    * @param {number} pageSize
-   * @returns {Array[unknown]}
+   * @returns {Array[IProperty]}
    * @memberof PropertyService
    */
-  findAllByCategory = async (category: number, page: number, pageSize: number): Promise<unknown[]> => {
+  findAllByCategory = async (
+    category: number,
+    page: number,
+    pageSize: number,
+  ): Promise<IProperty[]> => {
     const properties = await getConnection().manager.query(
       findAllByCategoryQuery(category, page, pageSize),
     );
@@ -96,21 +107,53 @@ export class PropertyService {
     return properties;
   };
 
-    /**
+  /**
    * Find All by user
    * @author Desire Kaleba
    * @since 0.001
+   *
    * @param {userId} userId
    * @param {number} page
    * @param {number} pageSize
-   * @returns {Array[Property]}
+   * @returns {Array[IProperty]}
    * @memberof PropertyService
    */
-     findAllByUser = async (userId: number, page: number, pageSize: number): Promise<Property[]> => {
-      const properties = await getConnection().manager.query(
-        findAllByUserQuery(userId, page, pageSize),
-      );
-  
-      return properties;
-    };
+  findAllByUser = async (
+    userId: number,
+    page: number,
+    pageSize: number,
+  ): Promise<IProperty[]> => {
+    const properties = await getConnection().manager.query(
+      findAllByUserQuery(userId, page, pageSize),
+    );
+
+    return properties;
+  };
+
+  /**
+   * Find One
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {slug} string
+   * @returns {Array[IProperty]}
+   * @memberof PropertyService
+   */
+  findOne = async (slug: string): Promise<IProperty[]> => {
+    const property = await getConnection().manager.query(findOneQuery(slug));
+    return property;
+  };
+
+  /**
+   * get By Slug
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {slug} string
+   * @returns {Property | undefined}
+   * @memberof PropertyService
+   */
+  getBySlug = async (slug: string): Promise<Property | undefined> => {
+    return await Property.findOne({ slug, active: true });
+  };
 }

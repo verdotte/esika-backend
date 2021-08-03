@@ -34,6 +34,8 @@ All notable changes to this project will be documented in this file.
 
 - Fix all property SQL queries [Fix] ~ Verdotte Aututu ~ August 02, 2021
 
+- Implemnt get, update & delete one property [Implementation] ~ Verdotte Aututu ~ August 03, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats
