@@ -1,12 +1,18 @@
 import { Request, Response } from 'express';
 import { ResponseUtil } from '../utils';
-import { OK } from '../constants/statusCodes';
-import { created } from '../constants/responseMessages';
+import { NOT_FOUND, OK } from '../constants/statusCodes';
+import {
+  created,
+  deleted,
+  notExist,
+  updated,
+} from '../constants/responseMessages';
 import { CreatePropertyDto } from '../dtos/createPropertyDto';
 import { PropertyService } from '../database/services';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
 import { paginator } from '../utils/paginator';
 import { PAGE_LIMIT } from '../constants/shared';
+import { IRequestWithProperty } from '../interfaces/requestWithProperty.interface';
 
 /**
  * Property Controller
@@ -196,7 +202,7 @@ export class PropertyController {
    * Get All By User
    * @author Desire Kaleba
    * @since 0.001
-   * 
+   *
    * @param {Request} req
    * @param {Response} res
    * @returns {Array{Property} properties
@@ -217,6 +223,94 @@ export class PropertyController {
       statusCode: OK,
       message: `success`,
       data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      res,
+    });
+  };
+
+  /**
+   * Get One Property
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Response} property payload
+   * @memberof PropertyController
+   */
+  getOneProperty = async (
+    req: IRequestWithProperty,
+    res: Response,
+  ): Promise<Response> => {
+    const { slug } = req.params;
+
+    const property = await this.propertyService.findOne(slug);
+
+    if (property.length === 0) {
+      return this.responseUtil.error({
+        statusCode: NOT_FOUND,
+        message: notExist('property'),
+        res,
+      });
+    }
+
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `success`,
+      data: property[0],
+      res,
+    });
+  };
+
+  /**
+   * Update Property
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {IRequestWithProperty} req
+   * @param {Response} res
+   * @returns {Response} property payload
+   * @memberof PropertyController
+   */
+  updateProperty = async (
+    req: IRequestWithProperty,
+    res: Response,
+  ): Promise<Response> => {
+    const { property, body } = req;
+
+    Object.assign(property, { ...body });
+    await property.save();
+
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: updated(`property`),
+      data: property,
+      res,
+    });
+  };
+
+  /**
+   * Delete Property
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {IRequestWithProperty} req
+   * @param {Response} res
+   * @returns {Response} property payload
+   * @memberof PropertyController
+   */
+  deleteProperty = async (
+    req: IRequestWithProperty,
+    res: Response,
+  ): Promise<Response> => {
+    const { property } = req;
+
+    Object.assign(property, { active: false });
+    await property.save();
+
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: deleted(`property`),
+      data: property,
       res,
     });
   };

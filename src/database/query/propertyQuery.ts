@@ -1,7 +1,7 @@
 export const findAllQuery = (page: number, pageSize: number): string => {
   return `
-    SELECT p.property_id, p.title, p.description, p.user, p.price, p.unit, p.type, 
-    p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     category.title AS category, city.name AS city, user.first_name AS firstName, 
     user.phone_number AS phoneNumber, user.picture, GROUP_CONCAT(image.url SEPARATOR ',') AS image
     FROM property p
@@ -17,7 +17,8 @@ export const findAllQuery = (page: number, pageSize: number): string => {
 
 export const getUnverifiedQuery = (page: number, pageSize: number): string => {
   return `
-    SELECT p.property_id, p.title, p.description, p.user, p.price, p.unit, p.type, 
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId,
+    p.price, p.unit, p.type, 
     p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     category.title AS category, city.name AS city, user.first_name AS firstName, 
     user.phone_number AS phoneNumber, user.picture, GROUP_CONCAT(image.url SEPARATOR ',') AS image
@@ -38,8 +39,8 @@ export const findAllByCategoryQuery = (
   pageSize: number,
 ): string => {
   return `
-    SELECT p.property_id, p.title, p.description, p.user, p.price, p.unit, p.type, 
-    p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     category.title AS category, city.name AS city, user.first_name AS firstName, 
     user.phone_number AS phoneNumber, user.picture, GROUP_CONCAT(image.url SEPARATOR ',') AS image
     FROM property p
@@ -53,10 +54,14 @@ export const findAllByCategoryQuery = (
     `;
 };
 
-export const findAllByUserQuery = (userId: number ,page: number, pageSize: number): string => {
+export const findAllByUserQuery = (
+  userId: number,
+  page: number,
+  pageSize: number,
+): string => {
   return `
-    SELECT p.property_id, p.title, p.description, p.user, p.price, p.unit, p.type, 
-    p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     category.title AS category, city.name AS city, user.first_name AS firstName, 
     user.phone_number AS phoneNumber, user.picture, image.url AS image
     FROM property p
@@ -66,5 +71,21 @@ export const findAllByUserQuery = (userId: number ,page: number, pageSize: numbe
     INNER JOIN image ON p.property_id = image.property
     WHERE p.user = ${userId} AND p.verified = ${1} AND p.active = ${1}
     ORDER BY createdAt ASC LIMIT ${pageSize} OFFSET ${page}
+    `;
+};
+
+export const findOneQuery = (slug: string): string => {
+  return `
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
+    category.title AS category, city.name AS city, user.first_name AS firstName, 
+    user.phone_number AS phoneNumber, user.picture, GROUP_CONCAT(image.url SEPARATOR ',') AS image
+    FROM property p
+    INNER JOIN user ON p.user = user.user_id 
+    INNER JOIN city ON p.city = city.city_id
+    INNER JOIN category ON p.category = category.category_id
+    INNER JOIN image ON p.property_id = image.property
+    WHERE p.slug = "${slug}"
+    GROUP BY p.property_id
     `;
 };

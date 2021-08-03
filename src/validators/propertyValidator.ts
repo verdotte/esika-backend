@@ -26,4 +26,26 @@ const createProperty = (req: Request, res: Response, next: NextFunction) => {
   validatorHandler(req, res, schema, next);
 };
 
-export const propertyValidator = { createProperty };
+const updateProperty = (req: Request, res: Response, next: NextFunction) => {
+  const schema = Joi.object().keys({
+    title: Joi.string().trim().min(2),
+    description: Joi.string().trim().min(5),
+    price: Joi.string().trim(),
+    location: Joi.string().trim(),
+    lat: Joi.number(),
+    lng: Joi.number(),
+    category: Joi.number().required(),
+    city: Joi.number().required(),
+    type: Joi.string().trim().valid(PropertyType.RENT, PropertyType.SELL),
+    unit: Joi.string().trim().valid(Unit.DAY, Unit.MONTH, Unit.YEAR),
+    bedroom: Joi.number(),
+    bathroom: Joi.boolean(),
+    squareFeet: Joi.string(),
+    parking: Joi.boolean(),
+    balcony: Joi.boolean(),
+  });
+
+  validatorHandler(req, res, schema, next);
+};
+
+export const propertyValidator = { createProperty, updateProperty };

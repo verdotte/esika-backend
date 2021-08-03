@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { IRoute } from '../interfaces/route.interface';
 import { PropertyController } from '../controllers/propertyController';
-import { asyncHandler, checkAuthUser, checkAdminAuth } from '../middlewares';
+import {
+  asyncHandler,
+  checkAuthUser,
+  checkAdminAuth,
+  checkProperty,
+} from '../middlewares';
 import { propertyValidator } from '../validators/propertyValidator';
 
 export class PropertyRoute implements IRoute {
@@ -29,14 +34,23 @@ export class PropertyRoute implements IRoute {
         asyncHandler(this.propertyController.getUnverifiedProperty),
       );
     this.router
-      .route(`${this.path}/:category`)
-      .get(
-        asyncHandler(this.propertyController.getByCategory),
-      );
+      .route(`${this.path}/category/:category`)
+      .get(asyncHandler(this.propertyController.getByCategory));
     this.router
       .route(`${this.path}/agent/:userId`)
-      .get(
-        asyncHandler(this.propertyController.getAllByUser),
+      .get(asyncHandler(this.propertyController.getAllByUser));
+    this.router
+      .route(`${this.path}/:slug`)
+      .get(asyncHandler(this.propertyController.getOneProperty))
+      .put(
+        asyncHandler(checkAuthUser),
+        asyncHandler(checkProperty),
+        asyncHandler(this.propertyController.updateProperty),
+      )
+      .delete(
+        asyncHandler(checkAuthUser),
+        asyncHandler(checkProperty),
+        asyncHandler(this.propertyController.deleteProperty),
       );
   }
 }
