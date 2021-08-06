@@ -19,6 +19,5 @@ export const checkUsername = async (
       res,
     });
   }
-
   next();
 };
