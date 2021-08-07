@@ -31,7 +31,7 @@ export class AdminController {
     private passwordUtil: PasswordUtil,
     private responseUtil: ResponseUtil,
     private adminService: AdminService,
-  ) {}
+  ) { }
 
   /**
    * Create Admin
@@ -127,5 +127,48 @@ export class AdminController {
       res,
     });
   };
+
+  /**
+   * Create Manager
+   * @author Masu Musole
+   * @since 0.001
+   * 
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {object} user payload
+   * @memberof AdminController
+   */
+  createManager = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+
+    const managerData: CreateAdminDto = req.body;
+    const hashedPassord = this.passwordUtil.hash(managerData.password);
+
+    if (managerData.role !== 'manager') {
+      return this.responseUtil.error({
+        statusCode: UNAUTHORIZED,
+        message: `Please make sure role is manager`,
+        res,
+      })
+    }
+
+    const newManager = await this.adminService.create({
+      ...managerData,
+      password: hashedPassord,
+    });
+
+    const token = this.tokenUtil.generate(newManager.adminId);
+
+    console.log(` ADMIN MANAGER TOKEN  ${token}`);
+
+    return this.responseUtil.success({
+      statusCode: CREATED,
+      message: created('manager'),
+      data: { token, username: newManager.username },
+      res,
+    });
+  }
 
 }
