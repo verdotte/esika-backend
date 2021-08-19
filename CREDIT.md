@@ -36,6 +36,10 @@ All notable changes to this project will be documented in this file.
 
 - Implemnt get, update & delete one property [Implementation] ~ Verdotte Aututu ~ August 03, 2021
 
+- Add Algolia Search API [Implementation] ~ Verdotte Aututu ~ August 19, 2021
+
+- Implement get user profile info [Implement] ~ Verdotte Aututu ~ August 19, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats

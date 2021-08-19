@@ -4,3 +4,4 @@ export * from './checkUserPhoneNumber';
 export * from './checkAuthUser';
 export * from './checkAdminAuth';
 export * from './checkProperty';
+export * from './checkProfile';

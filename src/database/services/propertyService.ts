@@ -9,7 +9,6 @@ import {
   findAllByUserQuery,
   findOneQuery,
 } from '../query/propertyQuery';
-
 import { IProperty } from '../../interfaces/requestWithProperty.interface';
 
 /**

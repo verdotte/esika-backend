@@ -20,8 +20,11 @@ export interface IProperty {
   createdAt: Date;
   firstName: string;
   phoneNumber: string;
-  picture: null;
+  picture: string;
   image: string;
+  area: string;
+  categoryId: number;
+  cityId: number;
 }
 
 export interface IRequestWithProperty extends Request {

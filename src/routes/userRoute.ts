@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { IRoute } from '../interfaces/route.interface';
 import { UserController } from '../controllers/userController';
-import { asyncHandler, checkAuthUser } from '../middlewares';
+import { asyncHandler, checkAuthUser, checkProfile } from '../middlewares';
 import { userValidator } from '../validators/userValidator';
 
 export class UserRoute implements IRoute {
@@ -17,7 +17,7 @@ export class UserRoute implements IRoute {
       .route(`${this.path}/profile`)
       .get(
         asyncHandler(checkAuthUser),
-        asyncHandler(this.userController.getProfile),
+        asyncHandler(this.userController.getCurrentProfile),
       );
     this.router
       .route(`${this.path}/agent`)
@@ -26,8 +26,13 @@ export class UserRoute implements IRoute {
       .route(`${this.path}/profile/:userId`)
       .put(
         asyncHandler(checkAuthUser),
+        asyncHandler(checkProfile),
         userValidator.updateUserInfo,
-        asyncHandler(this.userController.updateProfile),
+        asyncHandler(this.userController.editProfile),
+      )
+      .get(
+        asyncHandler(checkProfile),
+        asyncHandler(this.userController.getProfile),
       );
   }
 }
