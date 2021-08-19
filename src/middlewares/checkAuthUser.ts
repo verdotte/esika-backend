@@ -37,7 +37,7 @@ export const checkAuthUser = async (
     const { id }: { id: number } = decoded;
 
     const user = await userService.findById(id);
-    if (user === null) {
+    if (!user) {
       return responseUtil.error({
         statusCode: UNAUTHORIZED,
         message: `Unauthorized access for user`,

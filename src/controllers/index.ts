@@ -10,9 +10,10 @@ import {
   userService,
   propertyService,
   cityService,
-  categoryService
+  categoryService,
 } from '../database/services';
 import { twilioService } from '../plugins/twilo';
+import { notifEvent } from '../cores/registerEvent';
 
 export const authController = new AuthController(
   tokenUtil,
@@ -28,20 +29,15 @@ export const adminController = new AdminController(
   adminService,
 );
 
-export const userController = new UserController(
-  responseUtil,
-  userService
-);
+export const userController = new UserController(responseUtil, userService);
 
 export const propertyController = new PropertyController(
   responseUtil,
   propertyService,
+  notifEvent,
 );
 
-export const cityController = new CityController(
-  responseUtil,
-  cityService,
-);
+export const cityController = new CityController(responseUtil, cityService);
 
 export const categoryController = new CategoryController(
   responseUtil,

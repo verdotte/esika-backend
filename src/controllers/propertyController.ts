@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { EventEmitter } from 'events';
 import { ResponseUtil } from '../utils';
 import { NOT_FOUND, OK } from '../constants/statusCodes';
 import {
@@ -12,7 +13,10 @@ import { PropertyService } from '../database/services';
 import { IRequestWithUser } from '../interfaces/requestWithUser.interface';
 import { paginator } from '../utils/paginator';
 import { PAGE_LIMIT } from '../constants/shared';
-import { IRequestWithProperty } from '../interfaces/requestWithProperty.interface';
+import {
+  IRequestWithProperty,
+  IProperty,
+} from '../interfaces/requestWithProperty.interface';
 
 /**
  * Property Controller
@@ -29,6 +33,7 @@ export class PropertyController {
   constructor(
     private responseUtil: ResponseUtil,
     private propertyService: PropertyService,
+    private notifEvent: EventEmitter,
   ) {}
 
   /**
@@ -81,6 +86,14 @@ export class PropertyController {
     });
 
     await this.savePropertyImage(image, property.propertyId);
+
+    this.notifEvent.emit('create-index', {
+      title: property.title || property.description,
+      location: property.location,
+      objectID: property.slug,
+      image: image[0] ?? null,
+      resource: 'property',
+    });
 
     return this.responseUtil.success({
       statusCode: OK,
@@ -135,7 +148,14 @@ export class PropertyController {
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      data: {
+        propertyList:
+          propertyList.length > 0
+            ? this.propertyFormatter(propertyList)
+            : propertyList,
+        currentPage,
+        pageSize: PAGE_LIMIT,
+      },
       res,
     });
   };
@@ -164,7 +184,14 @@ export class PropertyController {
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      data: {
+        propertyList:
+          propertyList.length > 0
+            ? this.propertyFormatter(propertyList)
+            : propertyList,
+        currentPage,
+        pageSize: PAGE_LIMIT,
+      },
       res,
     });
   };
@@ -193,7 +220,14 @@ export class PropertyController {
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      data: {
+        propertyList:
+          propertyList.length > 0
+            ? this.propertyFormatter(propertyList)
+            : propertyList,
+        currentPage,
+        pageSize: PAGE_LIMIT,
+      },
       res,
     });
   };
@@ -222,7 +256,14 @@ export class PropertyController {
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: { propertyList, currentPage, pageSize: PAGE_LIMIT },
+      data: {
+        propertyList:
+          propertyList.length > 0
+            ? this.propertyFormatter(propertyList)
+            : propertyList,
+        currentPage,
+        pageSize: PAGE_LIMIT,
+      },
       res,
     });
   };
@@ -253,10 +294,12 @@ export class PropertyController {
       });
     }
 
+    const propertyPayload = this.propertyFormatter(property)[0];
+
     return this.responseUtil.success({
       statusCode: OK,
       message: `success`,
-      data: property[0],
+      data: propertyPayload,
       res,
     });
   };
@@ -279,6 +322,13 @@ export class PropertyController {
 
     Object.assign(property, { ...body });
     await property.save();
+
+    this.notifEvent.emit('update-index', {
+      title: property.title || property.description,
+      location: property.location,
+      objectID: property.slug,
+      resource: 'property',
+    });
 
     return this.responseUtil.success({
       statusCode: OK,
@@ -307,11 +357,71 @@ export class PropertyController {
     Object.assign(property, { active: false });
     await property.save();
 
+    this.notifEvent.emit('delete-index', property.slug);
+
     return this.responseUtil.success({
       statusCode: OK,
       message: deleted(`property`),
       data: property,
       res,
     });
+  };
+
+  private propertyFormatter = (property: IProperty[]): any[] => {
+    return property.map(
+      ({
+        propertyId,
+        title,
+        description,
+        userId,
+        price,
+        unit,
+        type,
+        bedroom,
+        bathroom,
+        location,
+        slug,
+        parking,
+        balcony,
+        category,
+        city,
+        createdAt,
+        firstName,
+        phoneNumber,
+        picture,
+        image,
+        area,
+        categoryId,
+        cityId,
+      }) => {
+        return {
+          propertyId,
+          title,
+          description,
+          userId,
+          price,
+          unit,
+          type,
+          location,
+          slug,
+          category,
+          city,
+          createdAt,
+          firstName,
+          phoneNumber,
+          picture,
+          image,
+          categoryId,
+          cityId,
+          spec: {
+            bedroom,
+            bathroom,
+            parking,
+            balcony,
+            area,
+          },
+        };
+      },
+    );
   };
 }

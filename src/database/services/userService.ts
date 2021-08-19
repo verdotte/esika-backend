@@ -27,12 +27,12 @@ export class UserService {
    * @since 0.001
    *
    * @param {number} userId
-   * @returns {User | null} user payload
+   * @returns {User | undefined} user payload
    * @memberof UserService
    */
-  findById = async (userId: number): Promise<User | null> => {
+  findById = async (userId: number): Promise<User | undefined> => {
     const user = await User.findOne({ userId });
-    return user ?? null;
+    return user;
   };
 
   /**
@@ -79,12 +79,19 @@ export class UserService {
    * @memberof UserService
    */
 
-  findByUserType = async (userType: string, pageNumber: number): Promise<User[]> => {
-    const users = await User.find({ where: { userType }, take: PAGE_LIMIT, skip: pageNumber });
+  findByUserType = async (
+    userType: string,
+    pageNumber: number,
+  ): Promise<User[]> => {
+    const users = await User.find({
+      where: { userType },
+      take: PAGE_LIMIT,
+      skip: pageNumber,
+    });
     return users;
   };
 
-    /**
+  /**
    * Update
    * @author Desire Kaleba
    * @since 0.001
@@ -94,14 +101,16 @@ export class UserService {
    * @returns {User | null} user payload
    * @memberof UserService
    */
-     update = async (userId: number, updatedInfo: UpdateUserDto): Promise<User | null> => {
-       const user = await this.findById(userId);
-       if (user) {
-          User.merge(user, updatedInfo);
-          const updatedUser = await User.save(user);
-          return updatedUser;
-       }
-       return null;
-       
-    };
+  update = async (
+    userId: number,
+    updatedInfo: UpdateUserDto,
+  ): Promise<User | null> => {
+    const user = await this.findById(userId);
+    if (user) {
+      User.merge(user, updatedInfo);
+      const updatedUser = await User.save(user);
+      return updatedUser;
+    }
+    return null;
+  };
 }
