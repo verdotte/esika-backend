@@ -31,7 +31,7 @@ export class UserService {
    * @memberof UserService
    */
   findById = async (userId: number): Promise<User | undefined> => {
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId, active: true });
     return user;
   };
 
@@ -39,6 +39,7 @@ export class UserService {
    * Update By Phone Number
    * @author Verdotte Aututu
    * @since 0.001
+   * @deprecated
    *
    * @param {string} phoneNumber
    * @returns {User | null} user payload
@@ -84,7 +85,7 @@ export class UserService {
     pageNumber: number,
   ): Promise<User[]> => {
     const users = await User.find({
-      where: { userType },
+      where: { userType, active: true },
       take: PAGE_LIMIT,
       skip: pageNumber,
     });

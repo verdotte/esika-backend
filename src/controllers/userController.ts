@@ -157,4 +157,38 @@ export class UserController {
       res,
     });
   };
+
+  /**
+   * Deactivate User
+   * @author Verdotte Aututu
+   * @since 0.001
+   *
+   * @param {IRequestWithUser} req
+   * @param {Response} res
+   * @returns {object} user payload
+   * @memberof UserController
+   */
+  deactivateUser = async (
+    req: IRequestWithUser,
+    res: Response,
+  ): Promise<Response> => {
+    const { currentUser, userProfile } = req;
+
+    if (currentUser.userId !== userProfile.userId) {
+      return this.responseUtil.error({
+        statusCode: UNAUTHORIZED,
+        message: `Unauthorized access for user`,
+        res,
+      });
+    }
+
+    Object.assign(userProfile, { active: false, verified: false });
+    await userProfile.save();
+    return this.responseUtil.success({
+      statusCode: OK,
+      message: `user successfully deactivated`,
+      data: { profile: userProfile },
+      res,
+    });
+  };
 }

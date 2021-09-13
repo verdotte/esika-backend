@@ -34,5 +34,12 @@ export class UserRoute implements IRoute {
         asyncHandler(checkProfile),
         asyncHandler(this.userController.getProfile),
       );
+    this.router
+      .route(`${this.path}/deactivate/:userId`)
+      .put(
+        asyncHandler(checkAuthUser),
+        asyncHandler(checkProfile),
+        asyncHandler(this.userController.deactivateUser),
+      );
   }
 }

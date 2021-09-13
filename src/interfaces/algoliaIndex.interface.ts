@@ -4,4 +4,6 @@ export interface IAlgoliaIndex {
   location: string;
   image?: string;
   resource: string;
+  description: string;
+  price: string;
 }
