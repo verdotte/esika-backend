@@ -93,6 +93,8 @@ export class PropertyController {
       objectID: property.slug,
       image: image[0] ?? null,
       resource: 'property',
+      description: property.description,
+      price: property.price,
     });
 
     return this.responseUtil.success({
@@ -328,6 +330,8 @@ export class PropertyController {
       location: property.location,
       objectID: property.slug,
       resource: 'property',
+      description: property.description,
+      price: property.price,
     });
 
     return this.responseUtil.success({
@@ -393,6 +397,7 @@ export class PropertyController {
         area,
         categoryId,
         cityId,
+        verified,
       }) => {
         return {
           propertyId,
@@ -413,6 +418,7 @@ export class PropertyController {
           image,
           categoryId,
           cityId,
+          verified,
           spec: {
             bedroom,
             bathroom,

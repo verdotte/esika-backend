@@ -40,6 +40,8 @@ All notable changes to this project will be documented in this file.
 
 - Implement get user profile info [Implement] ~ Verdotte Aututu ~ August 19, 2021
 
+- Update migration & implement deactivate user endpoint [Implement] ~ Verdotte Aututu ~ September 14, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats

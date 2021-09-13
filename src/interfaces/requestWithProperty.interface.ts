@@ -25,6 +25,7 @@ export interface IProperty {
   area: string;
   categoryId: number;
   cityId: number;
+  verified: boolean;
 }
 
 export interface IRequestWithProperty extends Request {

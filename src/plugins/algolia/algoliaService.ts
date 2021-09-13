@@ -22,6 +22,8 @@ export class AlgoliaService {
       location: '',
       image: '',
       resource: '',
+      description: '',
+      price: '',
     },
   ): Promise<void> => {
     const index = pick(obj, [
@@ -30,6 +32,8 @@ export class AlgoliaService {
       'location',
       'image',
       'resource',
+      'description',
+      'price',
     ]);
 
     if (obj.objectID) {
@@ -53,6 +57,8 @@ export class AlgoliaService {
       location: '',
       image: '',
       resource: '',
+      description: '',
+      price: '',
     },
   ): Promise<void> => {
     const index = pick(obj, [
@@ -61,6 +67,8 @@ export class AlgoliaService {
       'location',
       'image',
       'resource',
+      'description',
+      'price',
     ]);
 
     if (obj.objectID) {
