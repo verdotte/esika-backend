@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { EventEmitter } from 'events';
 import { ResponseUtil } from '../utils';
-import { NOT_FOUND, OK } from '../constants/statusCodes';
+import { NOT_FOUND, OK, UNAUTHORIZED } from '../constants/statusCodes';
 import {
   created,
   deleted,
@@ -239,19 +239,33 @@ export class PropertyController {
    * @author Desire Kaleba
    * @since 0.001
    *
-   * @param {Request} req
+   * @param {IRequestWithUser} req
    * @param {Response} res
    * @returns {Array{Property} properties
    * @memberof PropertyController
    */
-  getAllByUser = async (req: Request, res: Response): Promise<Response> => {
+  getAllByUser = async (
+    req: IRequestWithUser,
+    res: Response,
+  ): Promise<Response> => {
+    const { currentUser } = req;
     const { page = 0 } = req.query;
     const { userId = 0 } = req.params;
     const currentPage: number = +page;
     const pageNumber = paginator(currentPage, PAGE_LIMIT);
-    const userProperty = +userId;
+    const userIdProperty = +userId;
+
+    console.log('>>>>>>', currentUser.userId, userIdProperty);
+
+    if (currentUser.userId !== userIdProperty) {
+      return this.responseUtil.error({
+        statusCode: UNAUTHORIZED,
+        message: `Unauthorized access for user`,
+        res,
+      });
+    }
     const propertyList = await this.propertyService.findAllByUser(
-      userProperty,
+      userIdProperty,
       pageNumber,
       PAGE_LIMIT,
     );
