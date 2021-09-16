@@ -38,7 +38,10 @@ export class PropertyRoute implements IRoute {
       .get(asyncHandler(this.propertyController.getByCategory));
     this.router
       .route(`${this.path}/agent/:userId`)
-      .get(asyncHandler(this.propertyController.getAllByUser));
+      .get(
+        asyncHandler(checkAuthUser),
+        asyncHandler(this.propertyController.getAllByUser),
+      );
     this.router
       .route(`${this.path}/:slug`)
       .get(asyncHandler(this.propertyController.getOneProperty))

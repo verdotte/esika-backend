@@ -72,7 +72,7 @@ export const findAllByUserQuery = (
     INNER JOIN city ON p.city = city.city_id
     INNER JOIN category ON p.category = category.category_id
     LEFT JOIN image ON p.property_id = image.property
-    WHERE p.user = ${userId} AND p.verified = ${1} AND p.active = ${1}
+    WHERE p.user = ${userId} AND p.active = ${1}
     GROUP BY p.property_id
     ORDER BY RAND() LIMIT ${pageSize} OFFSET ${page}
     `;
