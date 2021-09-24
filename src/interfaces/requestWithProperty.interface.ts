@@ -1,5 +1,10 @@
 import { Request } from 'express';
-import { Unit, PropertyType, Property } from '../database/entity/Property';
+import {
+  Unit,
+  PropertyType,
+  Property,
+  Currency,
+} from '../database/entity/Property';
 
 export interface IProperty {
   propertyId: number;
@@ -26,6 +31,7 @@ export interface IProperty {
   categoryId: number;
   cityId: number;
   verified: boolean;
+  currency: Currency;
 }
 
 export interface IRequestWithProperty extends Request {

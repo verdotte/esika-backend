@@ -1,4 +1,4 @@
-import { PropertyType, Unit } from '../database/entity/Property';
+import { PropertyType, Unit, Currency } from '../database/entity/Property';
 
 export interface CreatePropertyDto {
   title: string;
@@ -17,4 +17,5 @@ export interface CreatePropertyDto {
   parking?: boolean;
   balcony?: boolean;
   image: string[];
+  currency?: Currency;
 }
