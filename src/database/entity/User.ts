@@ -51,6 +51,12 @@ export class User extends BaseEntity {
   @Column({ default: true })
   active: boolean;
 
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  bio: string;
+
   @OneToMany(() => Payment, (payment) => payment.user)
   @JoinColumn()
   payment: Payment[];

@@ -17,6 +17,7 @@ import {
   IRequestWithProperty,
   IProperty,
 } from '../interfaces/requestWithProperty.interface';
+import { Currency } from '../database/entity/Property';
 
 /**
  * Property Controller
@@ -66,6 +67,7 @@ export class PropertyController {
       parking,
       balcony,
       image,
+      currency,
     }: CreatePropertyDto = req.body;
 
     const property = await this.propertyService.create({
@@ -83,6 +85,7 @@ export class PropertyController {
       squareFeet,
       parking,
       balcony,
+      currency: currency || Currency.USD,
     });
 
     await this.savePropertyImage(image, property.propertyId);
@@ -255,8 +258,6 @@ export class PropertyController {
     const pageNumber = paginator(currentPage, PAGE_LIMIT);
     const userIdProperty = +userId;
 
-    console.log('>>>>>>', currentUser.userId, userIdProperty);
-
     if (currentUser.userId !== userIdProperty) {
       return this.responseUtil.error({
         statusCode: UNAUTHORIZED,
@@ -412,6 +413,7 @@ export class PropertyController {
         categoryId,
         cityId,
         verified,
+        currency,
       }) => {
         return {
           propertyId,
@@ -433,6 +435,7 @@ export class PropertyController {
           categoryId,
           cityId,
           verified,
+          currency,
           spec: {
             bedroom,
             bathroom,

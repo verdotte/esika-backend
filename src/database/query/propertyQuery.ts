@@ -1,6 +1,6 @@
 export const findAllQuery = (page: number, pageSize: number): string => {
   return `
-    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, p.currency,
     p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     p.verified, p.category AS categoryId, p.city AS cityId,category.title AS category, city.name AS city, 
     p.square_feet AS erea, user.first_name AS firstName, user.phone_number AS phoneNumber, user.picture, 
@@ -18,7 +18,7 @@ export const findAllQuery = (page: number, pageSize: number): string => {
 
 export const getUnverifiedQuery = (page: number, pageSize: number): string => {
   return `
-    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, p.currency,
     p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     p.verified, p.category AS categoryId, p.city AS cityId,category.title AS category, city.name AS city, 
     p.square_feet AS erea, user.first_name AS firstName, user.phone_number AS phoneNumber, user.picture, 
@@ -40,7 +40,7 @@ export const findAllByCategoryQuery = (
   pageSize: number,
 ): string => {
   return `
-    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, p.currency,
     p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     p.verified, p.category AS categoryId, p.city AS cityId,category.title AS category, city.name AS city, 
     p.square_feet AS erea, user.first_name AS firstName, user.phone_number AS phoneNumber, user.picture, 
@@ -62,7 +62,7 @@ export const findAllByUserQuery = (
   pageSize: number,
 ): string => {
   return `
-    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, p.currency,
     p.type, p.bedroom, p.bathroom, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,
     p.verified, p.category AS categoryId, p.city AS cityId,category.title AS category, city.name AS city, 
     p.square_feet AS erea, user.first_name AS firstName, user.phone_number AS phoneNumber, user.picture, 
@@ -80,7 +80,7 @@ export const findAllByUserQuery = (
 
 export const findOneQuery = (slug: string): string => {
   return `
-    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, 
+    SELECT p.property_id AS propertyId, p.title, p.description, p.user AS userId, p.price, p.unit, p.currency,
     p.type, p.category AS categoryId, p.city AS cityId, p.bedroom, p.bathroom, p.square_feet AS erea, 
     p.verified, p.location, p.slug, p.parking, p.balcony, p.created_at AS createdAt,category.title AS category, city.name AS city, 
     user.first_name AS firstName, user.phone_number AS phoneNumber, user.picture, 

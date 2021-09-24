@@ -21,6 +21,11 @@ export enum Unit {
   YEAR = 'year',
 }
 
+export enum Currency {
+  USD = 'usd',
+  CF = 'cf',
+}
+
 @Entity({ name: 'property' })
 export class Property extends BaseEntity {
   @PrimaryGeneratedColumn({ name: 'property_id' })
@@ -89,6 +94,13 @@ export class Property extends BaseEntity {
 
   @Column({ nullable: true })
   balcony: boolean;
+
+  @Column({
+    type: 'enum',
+    enum: Currency,
+    nullable: true,
+  })
+  currency: Currency;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

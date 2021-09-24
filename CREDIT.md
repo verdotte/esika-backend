@@ -42,6 +42,8 @@ All notable changes to this project will be documented in this file.
 
 - Update migration & implement deactivate user endpoint [Implement] ~ Verdotte Aututu ~ September 14, 2021
 
+- Add user address & bio in the user table [Refactor] ~ Verdotte Aututu ~ September 24, 2021
+
 #### Launch v0.001 ~ ESIKA API
 
 ##### Stats

@@ -19,7 +19,8 @@
     "create-table:prod": "cross-env NODE_ENV=production npm run typeorm:cli -- migration:run",
     "drop-table:prod": "cross-env NODE_ENV=production npm run typeorm:cli -- schema:drop",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "migrate:win-run": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "keywords": [],
   "author": "",

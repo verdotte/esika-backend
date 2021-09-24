@@ -34,7 +34,10 @@ const updateUserInfo = (req: Request, res: Response, next: NextFunction) => {
     firstName: Joi.string().trim().min(2),
     lastName: Joi.string().trim().min(2),
     email: Joi.string().trim().email(),
-    picture: Joi.string().trim()
+    picture: Joi.string().trim(),
+    phoneNumber: Joi.string().trim(),
+    address: Joi.string().trim(),
+    bio: Joi.string().trim(),
   });
 
   validatorHandler(req, res, schema, next);
