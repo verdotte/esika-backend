@@ -258,13 +258,13 @@ export class PropertyController {
     const pageNumber = paginator(currentPage, PAGE_LIMIT);
     const userIdProperty = +userId;
 
-    if (currentUser.userId !== userIdProperty) {
-      return this.responseUtil.error({
-        statusCode: UNAUTHORIZED,
-        message: `Unauthorized access for user`,
-        res,
-      });
-    }
+    // if (currentUser.userId !== userIdProperty) {
+    //   return this.responseUtil.error({
+    //     statusCode: UNAUTHORIZED,
+    //     message: `Unauthorized access for user`,
+    //     res,
+    //   });
+    // }
     const propertyList = await this.propertyService.findAllByUser(
       userIdProperty,
       pageNumber,
