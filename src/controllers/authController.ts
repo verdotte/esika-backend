@@ -1,4 +1,7 @@
 import { Request, Response } from 'express';
+import { AES } from 'crypto-js';
+import dotenv from 'dotenv';
+
 import { ResponseUtil, TokenUtil } from '../utils';
 import { TwilioService } from '../plugins/twilo';
 import {
@@ -12,6 +15,10 @@ import { created, verified, loginSuccess } from '../constants/responseMessages';
 import { CreateUserDto } from '../dtos/createUserDto';
 import { UserService } from '../database/services';
 import { UserType } from '../database/entity/User';
+
+dotenv.config();
+
+const { USER_TYPE_KEY } = process.env;
 
 /**
  * Auth Controller
@@ -131,7 +138,7 @@ export class AuthController {
 
     const user = await this.userService.findPhoneNumber(phoneNumber);
 
-    if (user === null) {
+    if (!user) {
       return this.responseUtil.error({
         statusCode: UNAUTHORIZED,
         message: `incorrect phone number`,
@@ -148,6 +155,10 @@ export class AuthController {
     }
 
     const token = this.tokenUtil.generate(user.userId);
+    const cipherUserType = AES.encrypt(
+      user.userType,
+      `${USER_TYPE_KEY}`,
+    ).toString();
     return this.responseUtil.success({
       statusCode: OK,
       message: loginSuccess(),
@@ -155,6 +166,8 @@ export class AuthController {
         token,
         phoneNumber: user.phoneNumber,
         fullName: `${user.firstName} ${user.lastName}`,
+        userId: user.userId,
+        userType: cipherUserType,
       },
       res,
     });
