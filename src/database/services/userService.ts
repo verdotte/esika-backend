@@ -16,9 +16,8 @@ export class UserService {
    * @returns {User | null} user payload
    * @memberof UserService
    */
-  findPhoneNumber = async (phoneNumber: string): Promise<User | null> => {
-    const user = await User.findOne({ phoneNumber });
-    return user ?? null;
+  findPhoneNumber = async (phoneNumber: string): Promise<User | undefined> => {
+    return await User.findOne({ phoneNumber });
   };
 
   /**
@@ -31,15 +30,13 @@ export class UserService {
    * @memberof UserService
    */
   findById = async (userId: number): Promise<User | undefined> => {
-    const user = await User.findOne({ userId, active: true });
-    return user;
+    return await User.findOne({ userId, active: true });
   };
 
   /**
    * Update By Phone Number
    * @author Verdotte Aututu
    * @since 0.001
-   * @deprecated
    *
    * @param {string} phoneNumber
    * @returns {User | null} user payload
